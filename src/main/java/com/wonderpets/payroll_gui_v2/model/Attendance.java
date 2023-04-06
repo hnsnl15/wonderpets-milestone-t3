@@ -7,8 +7,6 @@ public class Attendance {
     private String timeIn;
     private String timeOut;
 
-    //Creating constructor for the Attendance
-
     public Attendance(String id, String name, String date, String timeIn, String timeOut) {
 
         this.id = id.strip();
@@ -63,5 +61,5 @@ public class Attendance {
     public void setTimeOut(String timeOut) {
         this.timeOut = timeOut;
     }
-    
+
 }
