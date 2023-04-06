@@ -29,9 +29,27 @@ public class Employee extends User {
         this.benefit = benefit;
     }
 
+    public Employee(String lastName, String firstName, int id, String birthday, String address, String phoneNumber, String status, String position, String immediateSupervisor, Account governmentAccounts, Benefit benefit) {
+        super(lastName, firstName);
+        this.id = id;
+        this.birthday = stringToLocalDate(birthday);
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.position = position;
+        this.immediateSupervisor = immediateSupervisor;
+        this.governmentAccounts = governmentAccounts;
+        this.benefit = benefit;
+    }
+
     private static LocalDate stringToLocalDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
         return LocalDate.parse(dateString, formatter);
+    }
+
+    @Override
+    public String toString() {
+        return this.getFirstName() + " " + this.getLastName();
     }
 
     public int getId() {
