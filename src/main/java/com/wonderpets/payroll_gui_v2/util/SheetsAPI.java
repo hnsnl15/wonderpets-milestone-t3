@@ -37,9 +37,13 @@ public class SheetsAPI {
                 .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS_READONLY));
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String... args) throws IOException {
         queryEmployeeAttendance();
         queryListOfEmployees();
+    }
+
+    public static void run() throws IOException {
+        main();
     }
 
     private static List<List<Object>> getDataFromGoogleSheet(String query) throws IOException {
@@ -155,7 +159,7 @@ public class SheetsAPI {
         }
     }
 
-    private static void printEmployeeList() {
+    private static void printEmployeeList() {// A comment
         for (Employee employee : employees) {
             System.out.println(employee);
         }
