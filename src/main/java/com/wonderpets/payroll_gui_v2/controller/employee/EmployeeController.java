@@ -79,20 +79,19 @@ public class EmployeeController implements Initializable {
 
             FilteredList<EmployeeObservableListModel> employeeObservableListModelFilteredList = new FilteredList<>(employeeObservableList, b -> true);
 
-            employeeTableSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
-                employeeObservableListModelFilteredList.setPredicate(emp -> {
+            employeeTableSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+                    employeeObservableListModelFilteredList.setPredicate(emp -> {
 
-                    if (newValue.isEmpty() || newValue.isBlank()) return true;
+                        if (newValue.isEmpty() || newValue.isBlank()) return true;
 
-                    String searchKeyword = newValue.toLowerCase();
+                        String searchKeyword = newValue.toLowerCase();
 
-                    if ((String.valueOf(emp.getEmployeeId())).contains(searchKeyword)) {
-                        return true;
-                    } else if (emp.getFirstName().toLowerCase().contains(searchKeyword)) {
-                        return true;
-                    } else return emp.getLastName().toLowerCase().contains(searchKeyword);
-                });
-            });
+                        if ((String.valueOf(emp.getEmployeeId())).contains(searchKeyword)) {
+                            return true;
+                        } else if (emp.getFirstName().toLowerCase().contains(searchKeyword)) {
+                            return true;
+                        } else return emp.getLastName().toLowerCase().contains(searchKeyword);
+                    }));
 
             SortedList<EmployeeObservableListModel> employeeObservableListModelSortedList = new SortedList<>(employeeObservableListModelFilteredList);
             employeeObservableListModelSortedList.comparatorProperty().bind(employeeTableView.comparatorProperty());
