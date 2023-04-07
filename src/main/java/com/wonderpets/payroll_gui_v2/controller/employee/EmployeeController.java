@@ -3,6 +3,8 @@ package com.wonderpets.payroll_gui_v2.controller.employee;
 import com.wonderpets.payroll_gui_v2.util.SheetsAPI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -74,6 +76,27 @@ public class EmployeeController implements Initializable {
             employeeTableAction.setStyle("-fx-alignment: center;");
 
             employeeTableView.setItems(employeeObservableList);
+
+            FilteredList<EmployeeObservableListModel> employeeObservableListModelFilteredList = new FilteredList<>(employeeObservableList, b -> true);
+
+            employeeTableSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                employeeObservableListModelFilteredList.setPredicate(emp -> {
+
+                    if (newValue.isEmpty() || newValue.isBlank()) return true;
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if ((String.valueOf(emp.getEmployeeId())).contains(searchKeyword)) {
+                        return true;
+                    } else if (emp.getFirstName().toLowerCase().contains(searchKeyword)) {
+                        return true;
+                    } else return emp.getLastName().toLowerCase().contains(searchKeyword);
+                });
+            });
+
+            SortedList<EmployeeObservableListModel> employeeObservableListModelSortedList = new SortedList<>(employeeObservableListModelFilteredList);
+            employeeObservableListModelSortedList.comparatorProperty().bind(employeeTableView.comparatorProperty());
+            employeeTableView.setItems(employeeObservableListModelSortedList);
 
         } catch (Exception e) {
             e.printStackTrace();
