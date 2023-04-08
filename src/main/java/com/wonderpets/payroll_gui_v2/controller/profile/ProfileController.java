@@ -293,13 +293,6 @@ public class ProfileController {
         this.lastNameTextFieldValue.setText(lastNameTextFieldValue);
     }
 
-    public AnchorPane getProfileApplicationViewMainContainer() {
-        return profileApplicationViewMainContainer;
-    }
-
-    public void setProfileApplicationViewMainContainer(AnchorPane profileApplicationViewMainContainer) {
-        this.profileApplicationViewMainContainer = profileApplicationViewMainContainer;
-    }
 
     public Button getProfileDashboardCloseButton() {
         return profileDashboardCloseButton;
