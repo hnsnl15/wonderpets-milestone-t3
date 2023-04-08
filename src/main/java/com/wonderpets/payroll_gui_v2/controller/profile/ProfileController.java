@@ -272,8 +272,8 @@ public class ProfileController {
         return attendanceTableComputedSalaryBasedOnDatePick;
     }
 
-    public void setAttendanceTableComputedSalaryBasedOnDatePick(TextField attendanceTableComputedSalaryBasedOnDatePick) {
-        this.attendanceTableComputedSalaryBasedOnDatePick = attendanceTableComputedSalaryBasedOnDatePick;
+    public void setAttendanceTableComputedSalaryBasedOnDatePick(String attendanceTableComputedSalaryBasedOnDatePick) {
+        this.attendanceTableComputedSalaryBasedOnDatePick.setText(attendanceTableComputedSalaryBasedOnDatePick);
     }
 
     public TextField getFirstNameTextFieldValue() {
