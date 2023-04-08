@@ -67,6 +67,7 @@ public class EmployeeController implements Initializable {
                 employeeObservableList.add(newList);
                 counter++;
             }
+            // Setting up the initial value of the table
             employeeIdTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
             employeeFirstNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
             employeeLastNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -77,8 +78,8 @@ public class EmployeeController implements Initializable {
 
             employeeTableView.setItems(employeeObservableList);
 
+            // Implementing search functionality
             FilteredList<EmployeeObservableListModel> employeeObservableListModelFilteredList = new FilteredList<>(employeeObservableList, b -> true);
-
             employeeTableSearchField.textProperty().addListener((observable, oldValue, newValue) ->
                     employeeObservableListModelFilteredList.setPredicate(emp -> {
 
@@ -93,6 +94,7 @@ public class EmployeeController implements Initializable {
                         } else return emp.getLastName().toLowerCase().contains(searchKeyword);
                     }));
 
+            // Setting new values in the table after filtering from the search results
             SortedList<EmployeeObservableListModel> employeeObservableListModelSortedList = new SortedList<>(employeeObservableListModelFilteredList);
             employeeObservableListModelSortedList.comparatorProperty().bind(employeeTableView.comparatorProperty());
             employeeTableView.setItems(employeeObservableListModelSortedList);
@@ -103,10 +105,10 @@ public class EmployeeController implements Initializable {
     }
 
     public static class EmployeeObservableListModel {
-        int employeeId;
-        String firstName, lastName, phoneNumber, address;
         @FXML
-        Button tableViewButton;
+        private Button tableViewButton;
+        private int employeeId;
+        private String firstName, lastName, phoneNumber, address;
 
         public EmployeeObservableListModel(int employeeId, String firstName, String lastName, String phoneNumber, String address, Button viewButton) {
             this.employeeId = employeeId;
