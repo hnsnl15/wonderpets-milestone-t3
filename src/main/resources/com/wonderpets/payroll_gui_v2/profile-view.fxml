@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="620.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            fx:controller="com.wonderpets.payroll_gui_v2.controller.profile.ProfileController">
+    <center>
+        <HBox prefHeight="400.0" prefWidth="620.0" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane prefHeight="600.0" prefWidth="307.0"
+                            style="-fx-border-color: black; -fx-border-width: 0 2px 0 0; -fx-background-color: #5086f2;">
+                    <children>
+                        <Label layoutX="14.0" layoutY="13.0" style="-fx-text-fill: white;" text="Profile">
+                            <font>
+                                <Font name="Arial Black" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="13.0" layoutY="36.0" style="-fx-text-fill: white;" text="First Name:"/>
+                        <Label layoutX="13.0" layoutY="53.0" style="-fx-text-fill: white;" text="Last Name:"/>
+                        <Label layoutX="13.0" layoutY="70.0" style="-fx-text-fill: white;" text="Birthday:"/>
+                        <Label layoutX="13.0" layoutY="87.0" style="-fx-text-fill: white;" text="Address:"/>
+                        <Label layoutX="13.0" layoutY="104.0" style="-fx-text-fill: white;" text="Phone Number:"/>
+                        <Label layoutX="13.0" layoutY="152.0" style="-fx-text-fill: white;" text="Government Account">
+                            <font>
+                                <Font name="Arial Black" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="13.0" layoutY="174.0" style="-fx-text-fill: white;" text="SSS:"/>
+                        <Label layoutX="13.0" layoutY="191.0" style="-fx-text-fill: white;" text="Philhealth:"/>
+                        <Label layoutX="13.0" layoutY="208.0" style="-fx-text-fill: white;" text="Pagibig:"/>
+                        <Label layoutX="13.0" layoutY="225.0" style="-fx-text-fill: white;" text="TIN:"/>
+                        <Label layoutX="176.0" layoutY="36.0" style="-fx-text-fill: white;" text="Status:"/>
+                        <Label layoutX="176.0" layoutY="53.0" style="-fx-text-fill: white;" text="Position:"/>
+                        <Label layoutX="13.0" layoutY="121.0" lineSpacing="1.0" prefHeight="17.0" prefWidth="122.0"
+                               style="-fx-text-fill: white;" text="Immediate Supervisor:"/>
+                        <Label layoutX="13.0" layoutY="257.0" style="-fx-text-fill: white;" text="Rate">
+                            <font>
+                                <Font name="Arial Black" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="13.0" layoutY="279.0" style="-fx-text-fill: white;" text="Basic Salary:"/>
+                        <Label layoutX="13.0" layoutY="297.0" style="-fx-text-fill: white;" text="Rice Subsidy:"/>
+                        <Label layoutX="13.0" layoutY="315.0" style="-fx-text-fill: white;" text="Phone Allowance:"/>
+                        <Label layoutX="13.0" layoutY="333.0" style="-fx-text-fill: white;" text="Clothing Allowance:"/>
+                        <Label layoutX="13.0" layoutY="351.0" style="-fx-text-fill: white;"
+                               text="Gross Semi-Monthly Rate:"/>
+                        <Label layoutX="175.0" layoutY="279.0" style="-fx-text-fill: white;" text="Hourly Rate:"/>
+                        <Label fx:id="firstNameLabelValue" layoutX="80.0" layoutY="36.0" text="Name" textFill="WHITE"/>
+                        <Label fx:id="lastNameLabelValue" layoutX="80.0" layoutY="53.0" text="Label" textFill="WHITE"/>
+                        <Label fx:id="birthdayLabelValue" layoutX="66.0" layoutY="70.0" text="Label" textFill="WHITE"/>
+                        <Label fx:id="addressLabelValue" layoutX="66.0" layoutY="87.0" text="Label" textFill="WHITE"/>
+                        <Label fx:id="phoneNumberLabelValue" layoutX="104.0" layoutY="104.0" text="Label"
+                               textFill="WHITE"/>
+                        <Label fx:id="immediateSupervisorLabelValue" layoutX="137.0" layoutY="121.0" text="Label"
+                               textFill="WHITE"/>
+                        <Label fx:id="statusLabelValue" layoutX="217.0" layoutY="36.0" text="Label" textFill="WHITE"/>
+                        <Label fx:id="positionLabelValue" layoutX="226.0" layoutY="53.0" text="Label" textFill="WHITE"/>
+                        <Label fx:id="sssLabelValue" layoutX="41.0" layoutY="174.0" text="Label" textFill="WHITE"/>
+                        <Label fx:id="philhealthLabelValue" layoutX="74.0" layoutY="192.0" text="Label"
+                               textFill="WHITE"/>
+                        <Label fx:id="pagibigLabelValue" layoutX="60.0" layoutY="208.0" text="Label" textFill="WHITE"/>
+                        <Label fx:id="tinLabelValue" layoutX="41.0" layoutY="225.0" text="Label" textFill="WHITE"/>
+                        <Label fx:id="basicSalaryLabelValue" layoutX="82.0" layoutY="279.0" text="Label"
+                               textFill="WHITE"/>
+                        <Label fx:id="riceSubsidyLabelValue" layoutX="88.0" layoutY="297.0" text="Label"
+                               textFill="WHITE"/>
+                        <Label fx:id="phoneAllowanceLabelValue" layoutX="110.0" layoutY="315.0" text="Label"
+                               textFill="WHITE"/>
+                        <Label fx:id="clothingAllowanceLabelValue" layoutX="121.0" layoutY="333.0" text="Label"
+                               textFill="WHITE"/>
+                        <Label fx:id="grossSemiMonthlyRateLabelValue" layoutX="161.0" layoutY="351.0" text="Label"
+                               textFill="WHITE"/>
+                        <Label fx:id="hourlyRateLabelValue" layoutX="245.0" layoutY="279.0" text="Label"
+                               textFill="WHITE"/>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="620.0">
+                    <children>
+                        <TableView fx:id="attendanceTableView" layoutX="13.0" layoutY="44.0" prefHeight="200.0"
+                                   prefWidth="275.0">
+                            <columns>
+                                <TableColumn fx:id="attendanceTableDateColumn" editable="false" prefWidth="106.0"
+                                             resizable="false" sortable="false" text="Date"/>
+                                <TableColumn fx:id="attendanceTableTimeInColumn" editable="false" prefWidth="85.0"
+                                             resizable="false" sortable="false" text="Time in"/>
+                                <TableColumn fx:id="attendanceTableTimeOutColumn" editable="false" prefWidth="85.0"
+                                             resizable="false" sortable="false" text="Time out"/>
+                            </columns>
+                        </TableView>
+                        <Label layoutX="13.0" layoutY="14.0" text="Attendance">
+                            <font>
+                                <Font name="Arial Black" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="13.0" layoutY="256.0" text="Start:"/>
+                        <DatePicker fx:id="attendanceTableStartDatePicker" layoutX="52.0" layoutY="290.0"
+                                    prefHeight="25.0" prefWidth="105.0" promptText="Pick a date"/>
+                        <Label layoutX="13.0" layoutY="294.0" text="End:"/>
+                        <DatePicker fx:id="attendanceTableEndDatePicker" layoutX="52.0" layoutY="252.0"
+                                    prefHeight="25.0" prefWidth="105.0" promptText="Pick a date"/>
+                        <Label layoutX="13.0" layoutY="326.0" text="Computed Salary Based on Start and End date:"
+                               wrapText="true">
+                            <font>
+                                <Font name="System Bold" size="12.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="attendanceTableComputedSalaryBasedOnDatePick" editable="false" layoutX="13.0"
+                                   layoutY="351.0" promptText="0.00"/>
+                    </children>
+                </AnchorPane>
+            </children>
+        </HBox>
+    </center>
+</BorderPane>
