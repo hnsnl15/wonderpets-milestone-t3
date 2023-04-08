@@ -10,7 +10,7 @@
     <center>
         <HBox alignment="CENTER" minHeight="400.0" minWidth="620.0" BorderPane.alignment="CENTER">
             <children>
-                <GridPane alignment="CENTER" hgap="10.0" minHeight="400.0" minWidth="500.0"
+                <GridPane alignment="TOP_CENTER" hgap="10.0" minHeight="400.0" minWidth="500.0"
                           style="-fx-background-color: #0B2447;" vgap="10.0" HBox.hgrow="ALWAYS">
                     <children>
                         <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="10.0" GridPane.hgrow="ALWAYS"
@@ -39,7 +39,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="First Name:"/>
-                                        <TextField fx:id="firstNameTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="firstNameTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -47,7 +47,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="Last Name:"/>
-                                        <TextField fx:id="lastNameTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="lastNameTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -55,7 +55,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="Birthday:"/>
-                                        <TextField fx:id="birthdayTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="birthdayTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -63,7 +63,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="Address:"/>
-                                        <TextField fx:id="addressTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="addressTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -71,7 +71,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="Phone Number:"/>
-                                        <TextField fx:id="phoneNumberTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="phoneNumberTextFieldValue" editable="false"
                                                    focusTraversable="false" prefHeight="25.0" prefWidth="149.0"/>
                                     </children>
                                 </HBox>
@@ -79,7 +79,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="Status:"/>
-                                        <TextField fx:id="statusTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="statusTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -87,7 +87,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="Position:"/>
-                                        <TextField fx:id="positionTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="positionTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -95,9 +95,8 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="124.0" style="-fx-text-fill: white;"
                                                text="Immediate Supervisor:"/>
-                                        <TextField fx:id="immediateSupervisorTextFieldValue" disable="true"
-                                                   editable="false" focusTraversable="false" prefHeight="25.0"
-                                                   prefWidth="132.0"/>
+                                        <TextField fx:id="immediateSupervisorTextFieldValue" editable="false"
+                                                   focusTraversable="false" prefHeight="25.0" prefWidth="132.0"/>
                                     </children>
                                 </HBox>
                             </children>
@@ -124,15 +123,14 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="SSS:"/>
-                                        <TextField fx:id="sssTextFieldValue" disable="true" editable="false"
-                                                   focusTraversable="false"/>
+                                        <TextField fx:id="sssTextFieldValue" editable="false" focusTraversable="false"/>
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="2">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="Pagibig:"/>
-                                        <TextField fx:id="pagibigTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="pagibigTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -140,7 +138,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="Philhealth:"/>
-                                        <TextField fx:id="philhealthTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="philhealthTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -148,13 +146,13 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
                                                text="TIN:"/>
-                                        <TextField fx:id="tinTextFieldValue" disable="true" editable="false"
-                                                   focusTraversable="false"/>
+                                        <TextField fx:id="tinTextFieldValue" editable="false" focusTraversable="false"/>
                                     </children>
                                 </HBox>
                             </children>
                         </GridPane>
-                        <VBox spacing="20.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                        <VBox prefWidth="271.0" spacing="20.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                              GridPane.vgrow="ALWAYS">
                             <children>
                                 <Label style="-fx-text-fill: white;" text="Rate">
                                     <font>
@@ -165,7 +163,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="77.0" style="-fx-text-fill: white;"
                                                text="Basic Salary:"/>
-                                        <TextField fx:id="basicSalaryTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="basicSalaryTextFieldValue" editable="false"
                                                    focusTraversable="false" prefHeight="25.0" prefWidth="139.0"/>
                                     </children>
                                 </HBox>
@@ -173,7 +171,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="81.0" style="-fx-text-fill: white;"
                                                text="Rice Subsidy:"/>
-                                        <TextField fx:id="riceSubsidyTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="riceSubsidyTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -181,7 +179,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="113.0" style="-fx-text-fill: white;"
                                                text="Phone Allowance:"/>
-                                        <TextField fx:id="phoneAllowanceTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="phoneAllowanceTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
@@ -189,9 +187,8 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="130.0" style="-fx-text-fill: white;"
                                                text="Clothing Allowance:"/>
-                                        <TextField fx:id="clothingAllowanceTextFieldValue" disable="true"
-                                                   editable="false" focusTraversable="false" prefHeight="25.0"
-                                                   prefWidth="139.0"/>
+                                        <TextField fx:id="clothingAllowanceTextFieldValue" editable="false"
+                                                   focusTraversable="false" prefHeight="25.0" prefWidth="139.0"/>
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" focusTraversable="true" prefHeight="24.0"
@@ -199,21 +196,31 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="172.0" style="-fx-text-fill: white;"
                                                text="Gross Semi-monthly rate:" HBox.hgrow="NEVER"/>
-                                        <TextField fx:id="grossSemiMonthlyRateTextFieldValue" disable="true"
-                                                   editable="false" focusTraversable="false" prefHeight="25.0"
-                                                   prefWidth="135.0" HBox.hgrow="NEVER"/>
+                                        <TextField fx:id="grossSemiMonthlyRateTextFieldValue" editable="false"
+                                                   focusTraversable="false" prefHeight="25.0" prefWidth="135.0"
+                                                   HBox.hgrow="NEVER"/>
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="71.0" style="-fx-text-fill: white;"
                                                text="Hourly Rate:"/>
-                                        <TextField fx:id="hourlyRateTextFieldValue" disable="true" editable="false"
+                                        <TextField fx:id="hourlyRateTextFieldValue" editable="false"
                                                    focusTraversable="false"/>
                                     </children>
                                 </HBox>
                             </children>
                         </VBox>
+                        <AnchorPane prefHeight="58.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                            <children>
+                                <Button fx:id="profileDashboardCloseButton" cancelButton="true" layoutX="186.0"
+                                        layoutY="14.0" mnemonicParsing="false" text="Close">
+                                    <font>
+                                        <Font name="System Bold" size="14.0"/>
+                                    </font>
+                                </Button>
+                            </children>
+                        </AnchorPane>
                     </children>
                     <columnConstraints>
                         <ColumnConstraints/>
@@ -245,11 +252,11 @@
                         <RowConstraints/>
                     </rowConstraints>
                     <padding>
-                        <Insets bottom="30.0" left="10.0" right="10.0" top="20.0"/>
+                        <Insets left="10.0" right="10.0" top="20.0"/>
                     </padding>
                 </GridPane>
 
-                <VBox alignment="CENTER" minHeight="400.0" minWidth="310.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                <VBox alignment="TOP_CENTER" minHeight="400.0" minWidth="310.0" spacing="20.0" HBox.hgrow="ALWAYS">
                     <children>
                         <Label layoutX="13.0" layoutY="14.0" text="Attendance">
                             <font>
@@ -257,7 +264,7 @@
                             </font>
                         </Label>
                         <TableView fx:id="attendanceTableView" focusTraversable="false" layoutX="13.0" layoutY="44.0"
-                                   minHeight="275.0" minWidth="300.0" VBox.vgrow="ALWAYS">
+                                   maxHeight="400.0" minHeight="275.0" minWidth="300.0" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="attendanceTableDateColumn" editable="false" minWidth="106.0"
                                              prefWidth="-1.0" resizable="false" sortable="false" text="Date"/>
