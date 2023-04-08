@@ -66,11 +66,11 @@ public class SheetsAPI {
                 String timeOut = (String) row.get(5);
 
                 attendances.add(
-                        new Attendance(employeeId.strip(),
-                                firstName.strip() + " " + lastName.strip(),
-                                dateOfAttendance.strip(),
-                                timeIn.strip(),
-                                timeOut.strip())
+                        new Attendance(employeeId,
+                                firstName + " " + lastName,
+                                dateOfAttendance,
+                                timeIn,
+                                timeOut)
                 );
 
             } catch (IndexOutOfBoundsException | NullPointerException err) {
@@ -124,8 +124,8 @@ public class SheetsAPI {
 
                 employees.add(
                         new Employee(
-                                lastName.strip(),
                                 firstName.strip(),
+                                lastName.strip(),
                                 Integer.parseInt(empId),
                                 birthday.strip(),
                                 address.strip(),
@@ -159,7 +159,7 @@ public class SheetsAPI {
         }
     }
 
-    private static void printEmployeeList() {// A comment
+    private static void printEmployeeList() {
         for (Employee employee : employees) {
             System.out.println(employee);
         }
