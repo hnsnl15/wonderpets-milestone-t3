@@ -12,7 +12,6 @@ module com.wonderpets.payroll_gui_v2 {
     requires google.api.services.sheets.v4.rev581;
 
     opens com.wonderpets.payroll_gui_v2 to javafx.fxml;
-    exports com.wonderpets.payroll_gui_v2;
     exports com.wonderpets.payroll_gui_v2.controller.employee;
     opens com.wonderpets.payroll_gui_v2.controller.employee to javafx.fxml;
     exports com.wonderpets.payroll_gui_v2.controller.profile;
