@@ -1,9 +1,12 @@
 package com.wonderpets.payroll_gui_v2.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Attendance {
     private int id;
     private String name;
-    private String date;
+    private LocalDate date;
     private String timeIn;
     private String timeOut;
 
@@ -11,9 +14,27 @@ public class Attendance {
 
         this.id = Integer.parseInt(id.strip());
         this.name = name.strip();
-        this.date = date.strip();
+        this.date = stringToLocalDate(date.strip());
         this.timeIn = timeIn.strip();
         this.timeOut = timeOut.strip();
+    }
+
+    private static LocalDate stringToLocalDate(String dateString) {
+        LocalDate date = null;
+        // Define the patterns used in the date strings
+        String[] patterns = {"M/d/yyyy", "M/d/yy", "M/dd/yyyy"};
+        // Loop through each pattern and parse it into a LocalDate object
+        for (String pattern : patterns) {
+            try {
+                // Attempt to parse the date string with the current pattern
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+                date = LocalDate.parse(dateString, formatter);
+                break; // Break out of the loop if parsing is successful
+            } catch (Exception e) {
+                // Ignore exceptions and continue to the next pattern
+            }
+        }
+        return date;
     }
 
     @Override
@@ -39,11 +60,11 @@ public class Attendance {
     }
 
     public String getDate() {
-        return date;
+        return date.toString();
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.date = stringToLocalDate(date);
     }
 
     public String getTimeIn() {
