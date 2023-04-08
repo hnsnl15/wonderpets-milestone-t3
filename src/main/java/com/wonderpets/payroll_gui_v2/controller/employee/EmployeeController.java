@@ -95,18 +95,6 @@ public class EmployeeController implements Initializable {
                     DatePicker startDate = controller.getAttendanceTableStartDatePicker();
                     DatePicker endDate = controller.getAttendanceTableEndDatePicker();
 
-                    // Bind calculate button
-                    Button calculateButton = controller.getCalculateProfileDashboardButton();
-                    calculateButton.setOnAction(ev -> {
-                        // Calculate date difference in days
-                        Duration duration = Duration.between(startDate.getValue().atStartOfDay(),
-                                endDate.getValue().atStartOfDay());
-                        long days = duration.toDays();
-                        System.out.println(days);
-                    });
-
-                    controller.setCalculateProfileDashboardButton(calculateButton);
-
                     // Creating another loop to find all attendance of the current employee
                     int nestedCounter = 0;
                     List<Attendance> listOfAttendance = SheetsAPI.getAttendanceList();
@@ -138,6 +126,10 @@ public class EmployeeController implements Initializable {
                         }
                         nestedCounter++;
                     }
+
+                    // Bind calculate button
+                    Button calculateButton = controller.getCalculateProfileDashboardButton();
+
                     TableView<ProfileController.AttendanceObservableListModel> attendanceTableView = controller.getAttendanceTableView();
                     attendanceTableView.setItems(attendanceObservableListModel);
                     // Date picker event
@@ -178,6 +170,26 @@ public class EmployeeController implements Initializable {
 
                     // Set filtered list to table view
                     attendanceTableView.setItems(attendanceObservableListModelFilteredList);
+
+                    calculateButton.setOnAction(ev -> {
+                        // Calculate date difference in days
+                        Duration duration = Duration.between(startDate.getValue().atStartOfDay(),
+                                endDate.getValue().atStartOfDay());
+                        long days = duration.toDays();
+
+                        int totalHoursWorked = 0;
+                        double rate = Double.parseDouble(controller.getHourlyRateTextFieldValue().getText());
+                        double salary = 0;
+                        for (ProfileController.AttendanceObservableListModel att : attendanceObservableListModelFilteredList) {
+                            Attendance att1 = new Attendance(att.getTimeIn(), att.getTimeOut());
+                            totalHoursWorked += att1.getHoursWorkedPerDay();
+                            salary += (rate * totalHoursWorked);
+                        }
+                        controller.setAttendanceTableComputedSalaryBasedOnDatePick(String.valueOf(salary));
+
+                    });
+
+                    controller.setCalculateProfileDashboardButton(calculateButton);
 
                     controller.setAttendanceTableView(attendanceTableView);
                 }
