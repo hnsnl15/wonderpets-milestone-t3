@@ -19,10 +19,10 @@ public class Attendance {
         this.timeOut = timeOut.strip();
     }
 
-    private static LocalDate stringToLocalDate(String dateString) {
+    public static LocalDate stringToLocalDate(String dateString) {
         LocalDate date = null;
         // Define the patterns used in the date strings
-        String[] patterns = {"M/d/yyyy", "M/d/yy", "M/dd/yyyy"};
+        String[] patterns = {"M/d/yyyy", "M/d/yy", "M/dd/yyyy", "yyyy-M-dd"};
         // Loop through each pattern and parse it into a LocalDate object
         for (String pattern : patterns) {
             try {
