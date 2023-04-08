@@ -8,7 +8,7 @@
             minWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             fx:controller="com.wonderpets.payroll_gui_v2.controller.employee.EmployeeController">
     <top>
-        <AnchorPane prefHeight="80.0" prefWidth="1080.0" style="-fx-background-color: #32a85a;"
+        <AnchorPane prefHeight="80.0" prefWidth="1080.0" style="-fx-background-color: #0B2447;"
                     BorderPane.alignment="CENTER">
             <padding>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
@@ -48,7 +48,7 @@
     </center>
     <bottom>
         <Button fx:id="employeeTableViewButton" alignment="CENTER" disable="true" mnemonicParsing="false"
-                style="-fx-background-color: #32a85a;" text="View" textFill="WHITE" BorderPane.alignment="CENTER">
+                style="-fx-background-color: #0B2447;" text="View" textFill="WHITE" BorderPane.alignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>

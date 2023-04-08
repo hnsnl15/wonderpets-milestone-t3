@@ -306,6 +306,12 @@
                                            editable="false" focusTraversable="false" promptText="0.00"/>
                             </children>
                         </VBox>
+                        <Button fx:id="calculateProfileDashboardButton" disable="true" mnemonicParsing="false"
+                                style="-fx-background-color: #0B2447; -fx-text-fill: white;" text="Calculate">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Button>
                     </children>
                     <padding>
                         <Insets bottom="30.0" left="10.0" right="10.0" top="10.0"/>

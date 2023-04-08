@@ -14,17 +14,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static com.wonderpets.payroll_gui_v2.model.Employee.*;
 
 public class EmployeeController implements Initializable {
 
@@ -93,6 +97,9 @@ public class EmployeeController implements Initializable {
                     controller.setPagibigTextFieldValue(listOfEmployee.get(counter).getGovernmentAccounts().tin());
                     controller.setClothingAllowanceTextFieldValue(String.valueOf(listOfEmployee.get(counter).getBenefit().getClothingAllowance()));
 
+                    DatePicker startDate = controller.getAttendanceTableStartDatePicker();
+                    DatePicker endDate = controller.getAttendanceTableEndDatePicker();
+
                     // Creating another loop to find all attendance of the current employee
                     int nestedCounter = 0;
                     List<Attendance> listOfAttendance = SheetsAPI.getAttendanceList();
@@ -124,8 +131,83 @@ public class EmployeeController implements Initializable {
                         }
                         nestedCounter++;
                     }
+
+                    // Bind calculate button
+                    Button calculateButton = controller.getCalculateProfileDashboardButton();
+
                     TableView<ProfileController.AttendanceObservableListModel> attendanceTableView = controller.getAttendanceTableView();
                     attendanceTableView.setItems(attendanceObservableListModel);
+                    // Date picker event
+                    startDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        // Check if end date is after start date
+                        if (newValue != null && endDate.getValue() != null) {
+                            calculateButton.setDisable(endDate.getValue().isBefore(newValue));
+                        }
+                    });
+                    endDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        // Check if end date is after start date
+                        if (newValue != null && startDate.getValue() != null) {
+                            calculateButton.setDisable(newValue.isBefore(startDate.getValue()));
+                        }
+                    });
+                    // Filter selected date and update the table
+                    FilteredList<ProfileController.AttendanceObservableListModel> attendanceObservableListModelFilteredList = new FilteredList<>(attendanceObservableListModel, b -> true);
+
+                    startDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        attendanceObservableListModelFilteredList.setPredicate(attendance -> {
+                            LocalDate start = startDate.getValue();
+                            LocalDate end = endDate.getValue();
+                            LocalDate d = LocalDate.parse(attendance.getDate());
+                            return (start == null || d.isAfter(start) || d.isEqual(start)) &&
+                                    (end == null || d.isBefore(end) || d.isEqual(end));
+                        });
+                    });
+
+                    endDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        attendanceObservableListModelFilteredList.setPredicate(attendance -> {
+                            LocalDate start = startDate.getValue();
+                            LocalDate end = endDate.getValue();
+                            LocalDate d = LocalDate.parse(attendance.getDate());
+                            return (start == null || d.isAfter(start) || d.isEqual(start)) &&
+                                    (end == null || d.isBefore(end) || d.isEqual(end));
+                        });
+                    });
+
+                    // Set filtered list to table view
+                    attendanceTableView.setItems(attendanceObservableListModelFilteredList);
+
+                    calculateButton.setOnAction(ev -> {
+                        // Calculate date difference in days
+                        Duration duration = Duration.between(startDate.getValue().atStartOfDay(),
+                                endDate.getValue().atStartOfDay());
+                        long days = duration.toDays();
+
+                        int totalHoursWorked = 0;
+                        double rate = Double.parseDouble(controller.getHourlyRateTextFieldValue().getText());
+                        double salary = 0;
+                        for (ProfileController.AttendanceObservableListModel att : attendanceObservableListModelFilteredList) {
+                            Attendance att1 = new Attendance(att.getTimeIn(), att.getTimeOut());
+                            totalHoursWorked += att1.getHoursWorkedPerDay();
+                            salary += (rate * totalHoursWorked);
+                        }
+                        BigDecimal s = new BigDecimal(salary);
+                        Locale ph = new Locale("en", "PH");
+                        NumberFormat moneyFormat = NumberFormat.getCurrencyInstance(ph);
+                        double tax = calculateTax(BigDecimal.valueOf(salary), calculateSSSContribution(BigDecimal.valueOf(salary)),
+                                calculatePagibigContribution(BigDecimal.valueOf(salary)),
+                                calculatePhilhealthContribution(BigDecimal.valueOf(salary)));
+
+
+//                        double totalDeductions = calculateSSSContribution(BigDecimal.valueOf(salary))
+//                                + calculatePhilhealthContribution(BigDecimal.valueOf(salary))
+//                                + calculatePagibigContribution(BigDecimal.valueOf(salary));
+
+                        controller.setAttendanceTableComputedSalaryBasedOnDatePick(String.valueOf(moneyFormat.format(s.subtract(BigDecimal.valueOf(tax)))));
+
+                    });
+
+                    controller.setCalculateProfileDashboardButton(calculateButton);
+
                     controller.setAttendanceTableView(attendanceTableView);
                 }
                 counter++;
