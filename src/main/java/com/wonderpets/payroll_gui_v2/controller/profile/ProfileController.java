@@ -7,6 +7,8 @@ import javafx.scene.layout.AnchorPane;
 public class ProfileController {
 
     @FXML
+    private Button calculateProfileDashboardButton;
+    @FXML
     private Button profileDashboardCloseButton;
     @FXML
     private TextField birthdayTextFieldValue;
@@ -58,8 +60,6 @@ public class ProfileController {
     private TextField firstNameTextFieldValue;
     @FXML
     private TextField lastNameTextFieldValue;
-    @FXML
-    private AnchorPane profileApplicationViewMainContainer;
 
     public ProfileController() {
     }
@@ -90,7 +90,6 @@ public class ProfileController {
         this.attendanceTableComputedSalaryBasedOnDatePick = attendanceTableComputedSalaryBasedOnDatePick;
         this.firstNameTextFieldValue = firstNameTextFieldValue;
         this.lastNameTextFieldValue = lastNameTextFieldValue;
-        this.profileApplicationViewMainContainer = profileApplicationViewMainContainer;
     }
 
     public TextField getBirthdayTextFieldValue() {
@@ -296,6 +295,14 @@ public class ProfileController {
 
     public Button getProfileDashboardCloseButton() {
         return profileDashboardCloseButton;
+    }
+
+    public Button getCalculateProfileDashboardButton() {
+        return calculateProfileDashboardButton;
+    }
+
+    public void setCalculateProfileDashboardButton(Button calculateProfileDashboardButton) {
+        this.calculateProfileDashboardButton = calculateProfileDashboardButton;
     }
 
     public static class AttendanceObservableListModel {
