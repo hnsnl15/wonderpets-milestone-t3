@@ -37,9 +37,13 @@ public class SheetsAPI {
                 .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS_READONLY));
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String... args) throws IOException {
         queryEmployeeAttendance();
         queryListOfEmployees();
+    }
+
+    public static void run() throws IOException {
+        main();
     }
 
     private static List<List<Object>> getDataFromGoogleSheet(String query) throws IOException {
@@ -62,11 +66,11 @@ public class SheetsAPI {
                 String timeOut = (String) row.get(5);
 
                 attendances.add(
-                        new Attendance(employeeId.strip(),
-                                firstName.strip() + " " + lastName.strip(),
-                                dateOfAttendance.strip(),
-                                timeIn.strip(),
-                                timeOut.strip())
+                        new Attendance(employeeId,
+                                firstName + " " + lastName,
+                                dateOfAttendance,
+                                timeIn,
+                                timeOut)
                 );
 
             } catch (IndexOutOfBoundsException | NullPointerException err) {
@@ -120,8 +124,8 @@ public class SheetsAPI {
 
                 employees.add(
                         new Employee(
-                                lastName.strip(),
                                 firstName.strip(),
+                                lastName.strip(),
                                 Integer.parseInt(empId),
                                 birthday.strip(),
                                 address.strip(),

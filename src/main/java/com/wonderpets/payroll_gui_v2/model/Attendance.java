@@ -1,7 +1,7 @@
 package com.wonderpets.payroll_gui_v2.model;
 
 public class Attendance {
-    private String id;
+    private int id;
     private String name;
     private String date;
     private String timeIn;
@@ -9,7 +9,7 @@ public class Attendance {
 
     public Attendance(String id, String name, String date, String timeIn, String timeOut) {
 
-        this.id = id.strip();
+        this.id = Integer.parseInt(id.strip());
         this.name = name.strip();
         this.date = date.strip();
         this.timeIn = timeIn.strip();
@@ -22,12 +22,12 @@ public class Attendance {
                 getId(), getName(), getDate(), getTimeIn(), getTimeOut());
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = Integer.parseInt(id);
     }
 
     public String getName() {

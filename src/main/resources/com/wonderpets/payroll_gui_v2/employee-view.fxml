@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0"
+            minWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            fx:controller="com.wonderpets.payroll_gui_v2.controller.employee.EmployeeController">
+    <top>
+        <AnchorPane prefHeight="80.0" prefWidth="1080.0" style="-fx-background-color: #32a85a;"
+                    BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <children>
+                <Label layoutX="14.0" layoutY="32.0" text="Search Employee" textFill="WHITE">
+                    <font>
+                        <Font name="Arial" size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="employeeTableSearchField" layoutX="135.0" layoutY="28.0" prefHeight="25.0"
+                           prefWidth="200.0" promptText="Enter name or id"/>
+            </children>
+        </AnchorPane>
+    </top>
+    <center>
+        <TableView fx:id="employeeTableView" fixedCellSize="50.0" minHeight="400.0" minWidth="1080.0">
+            <columns>
+                <TableColumn id="employeeIdTableColumn" fx:id="employeeIdTableColumn" editable="false" minWidth="70.0"
+                             prefWidth="-1.0" resizable="false" sortable="false" text="ID"/>
+                <TableColumn id="employeeTableFirstName" fx:id="employeeFirstNameTableColumn" editable="false"
+                             minWidth="195.0" prefWidth="-1.0" resizable="false" sortable="false" text="First Name"/>
+                <TableColumn id="employeeTableLastName" fx:id="employeeLastNameTableColumn" editable="false"
+                             minWidth="195.0" prefWidth="-1.0" resizable="false" sortable="false" text="Last Name"/>
+                <TableColumn id="employeeTablePhoneNumber" fx:id="employeePhoneNumberTableColumn" editable="false"
+                             minWidth="190.0" prefWidth="-1.0" resizable="false" sortable="false" text="Phone Number"/>
+                <TableColumn id="employeeAddressTableColumn" fx:id="employeeAddressTableColumn" editable="false"
+                             minWidth="430.0" prefWidth="-1.0" resizable="false" sortable="false" text="Address"/>
+            </columns>
+            <BorderPane.margin>
+                <Insets/>
+            </BorderPane.margin>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </center>
+    <bottom>
+        <Button fx:id="employeeTableViewButton" alignment="CENTER" disable="true" mnemonicParsing="false"
+                style="-fx-background-color: #32a85a;" text="View" textFill="WHITE" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+            <BorderPane.margin>
+                <Insets bottom="10.0" top="10.0"/>
+            </BorderPane.margin>
+        </Button>
+    </bottom>
+</BorderPane>
