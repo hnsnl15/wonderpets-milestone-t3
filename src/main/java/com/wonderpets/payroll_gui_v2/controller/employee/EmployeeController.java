@@ -114,7 +114,7 @@ public class EmployeeController implements Initializable {
 
         try {
             SheetsAPI.run();
-
+            // Creating and loop to populate a table
             int counter = 0;
             while (counter < SheetsAPI.getEmployeeList().size()) {
                 int employeeId = SheetsAPI.getEmployeeList().get(counter).getId();
@@ -123,7 +123,7 @@ public class EmployeeController implements Initializable {
                 String phoneNumber = SheetsAPI.getEmployeeList().get(counter).getPhoneNumber();
                 String address = SheetsAPI.getEmployeeList().get(counter).getAddress();
 
-
+                // Creating new table cell with employee data
                 EmployeeObservableListModel newList = new EmployeeObservableListModel(
                         employeeId,
                         firstName,
