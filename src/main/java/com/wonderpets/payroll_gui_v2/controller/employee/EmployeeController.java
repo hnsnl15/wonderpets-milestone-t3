@@ -36,6 +36,10 @@ public class EmployeeController implements Initializable {
     @FXML
     private TableColumn<EmployeeObservableListModel, String> employeeAddressTableColumn;
 
+    @FXML
+    private void onViewButtonClick() {
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
