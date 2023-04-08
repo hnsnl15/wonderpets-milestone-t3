@@ -15,4 +15,6 @@ module com.wonderpets.payroll_gui_v2 {
     exports com.wonderpets.payroll_gui_v2;
     exports com.wonderpets.payroll_gui_v2.controller.employee;
     opens com.wonderpets.payroll_gui_v2.controller.employee to javafx.fxml;
+    exports com.wonderpets.payroll_gui_v2.controller.profile;
+    opens com.wonderpets.payroll_gui_v2.controller.profile to javafx.fxml;
 }
