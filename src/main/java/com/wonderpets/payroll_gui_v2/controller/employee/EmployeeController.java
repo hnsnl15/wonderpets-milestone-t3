@@ -14,15 +14,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -93,6 +92,21 @@ public class EmployeeController implements Initializable {
                     controller.setPagibigTextFieldValue(listOfEmployee.get(counter).getGovernmentAccounts().tin());
                     controller.setClothingAllowanceTextFieldValue(String.valueOf(listOfEmployee.get(counter).getBenefit().getClothingAllowance()));
 
+                    DatePicker startDate = controller.getAttendanceTableStartDatePicker();
+                    DatePicker endDate = controller.getAttendanceTableEndDatePicker();
+
+                    // Bind calculate button
+                    Button calculateButton = controller.getCalculateProfileDashboardButton();
+                    calculateButton.setOnAction(ev -> {
+                        // Calculate date difference in days
+                        Duration duration = Duration.between(startDate.getValue().atStartOfDay(),
+                                endDate.getValue().atStartOfDay());
+                        long days = duration.toDays();
+                        System.out.println(days);
+                    });
+
+                    controller.setCalculateProfileDashboardButton(calculateButton);
+
                     // Creating another loop to find all attendance of the current employee
                     int nestedCounter = 0;
                     List<Attendance> listOfAttendance = SheetsAPI.getAttendanceList();
@@ -126,6 +140,45 @@ public class EmployeeController implements Initializable {
                     }
                     TableView<ProfileController.AttendanceObservableListModel> attendanceTableView = controller.getAttendanceTableView();
                     attendanceTableView.setItems(attendanceObservableListModel);
+                    // Date picker event
+                    startDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        // Check if end date is after start date
+                        if (newValue != null && endDate.getValue() != null) {
+                            calculateButton.setDisable(endDate.getValue().isBefore(newValue));
+                        }
+                    });
+                    endDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        // Check if end date is after start date
+                        if (newValue != null && startDate.getValue() != null) {
+                            calculateButton.setDisable(newValue.isBefore(startDate.getValue()));
+                        }
+                    });
+                    // Filter selected date and update the table
+                    FilteredList<ProfileController.AttendanceObservableListModel> attendanceObservableListModelFilteredList = new FilteredList<>(attendanceObservableListModel, b -> true);
+
+                    startDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        attendanceObservableListModelFilteredList.setPredicate(attendance -> {
+                            LocalDate start = startDate.getValue();
+                            LocalDate end = endDate.getValue();
+                            LocalDate d = LocalDate.parse(attendance.getDate());
+                            return (start == null || d.isAfter(start) || d.isEqual(start)) &&
+                                    (end == null || d.isBefore(end) || d.isEqual(end));
+                        });
+                    });
+
+                    endDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        attendanceObservableListModelFilteredList.setPredicate(attendance -> {
+                            LocalDate start = startDate.getValue();
+                            LocalDate end = endDate.getValue();
+                            LocalDate d = LocalDate.parse(attendance.getDate());
+                            return (start == null || d.isAfter(start) || d.isEqual(start)) &&
+                                    (end == null || d.isBefore(end) || d.isEqual(end));
+                        });
+                    });
+
+                    // Set filtered list to table view
+                    attendanceTableView.setItems(attendanceObservableListModelFilteredList);
+
                     controller.setAttendanceTableView(attendanceTableView);
                 }
                 counter++;
@@ -146,6 +199,13 @@ public class EmployeeController implements Initializable {
 
 
     }
+
+//    private double onCalculateButtonClick(ActionEvent event) {
+//        double result = 0d;
+//
+//
+//        return result;
+//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
