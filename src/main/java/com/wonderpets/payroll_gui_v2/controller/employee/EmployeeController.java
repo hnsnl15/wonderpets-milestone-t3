@@ -19,11 +19,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static com.wonderpets.payroll_gui_v2.model.Employee.*;
 
 public class EmployeeController implements Initializable {
 
@@ -185,7 +190,19 @@ public class EmployeeController implements Initializable {
                             totalHoursWorked += att1.getHoursWorkedPerDay();
                             salary += (rate * totalHoursWorked);
                         }
-                        controller.setAttendanceTableComputedSalaryBasedOnDatePick(String.valueOf(salary));
+                        BigDecimal s = new BigDecimal(salary);
+                        Locale ph = new Locale("en", "PH");
+                        NumberFormat moneyFormat = NumberFormat.getCurrencyInstance(ph);
+                        double tax = calculateTax(BigDecimal.valueOf(salary), calculateSSSContribution(BigDecimal.valueOf(salary)),
+                                calculatePagibigContribution(BigDecimal.valueOf(salary)),
+                                calculatePhilhealthContribution(BigDecimal.valueOf(salary)));
+
+
+//                        double totalDeductions = calculateSSSContribution(BigDecimal.valueOf(salary))
+//                                + calculatePhilhealthContribution(BigDecimal.valueOf(salary))
+//                                + calculatePagibigContribution(BigDecimal.valueOf(salary));
+
+                        controller.setAttendanceTableComputedSalaryBasedOnDatePick(String.valueOf(moneyFormat.format(s.subtract(BigDecimal.valueOf(tax)))));
 
                     });
 
