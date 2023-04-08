@@ -16,7 +16,7 @@ public class ProfileApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ProfileApplication.class.getResource("/com/wonderpets/payroll_gui_v2/profile-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 620, 400);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("MotorPH Payroll Management System");
         stage.setScene(scene);
         stage.show();
