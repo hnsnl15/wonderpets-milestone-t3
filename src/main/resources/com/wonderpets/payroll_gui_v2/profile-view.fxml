@@ -1,116 +1,313 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="620.0"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" minHeight="500.0" minWidth="620.0"
             xmlns="http://javafx.com/javafx/17.0.2-ea"
             fx:controller="com.wonderpets.payroll_gui_v2.controller.profile.ProfileController">
     <center>
-        <HBox prefHeight="400.0" prefWidth="620.0" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" minHeight="400.0" minWidth="620.0" BorderPane.alignment="CENTER">
             <children>
-                <AnchorPane prefHeight="600.0" prefWidth="307.0"
-                            style="-fx-border-color: black; -fx-border-width: 0 2px 0 0; -fx-background-color: #5086f2;">
+                <GridPane alignment="CENTER" hgap="10.0" minHeight="400.0" minWidth="500.0"
+                          style="-fx-background-color: #0B2447;" vgap="10.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label layoutX="14.0" layoutY="13.0" style="-fx-text-fill: white;" text="Profile">
-                            <font>
-                                <Font name="Arial Black" size="14.0"/>
-                            </font>
-                        </Label>
-                        <Label layoutX="13.0" layoutY="36.0" style="-fx-text-fill: white;" text="First Name:"/>
-                        <Label layoutX="13.0" layoutY="53.0" style="-fx-text-fill: white;" text="Last Name:"/>
-                        <Label layoutX="13.0" layoutY="70.0" style="-fx-text-fill: white;" text="Birthday:"/>
-                        <Label layoutX="13.0" layoutY="87.0" style="-fx-text-fill: white;" text="Address:"/>
-                        <Label layoutX="13.0" layoutY="104.0" style="-fx-text-fill: white;" text="Phone Number:"/>
-                        <Label layoutX="13.0" layoutY="152.0" style="-fx-text-fill: white;" text="Government Account">
-                            <font>
-                                <Font name="Arial Black" size="14.0"/>
-                            </font>
-                        </Label>
-                        <Label layoutX="13.0" layoutY="174.0" style="-fx-text-fill: white;" text="SSS:"/>
-                        <Label layoutX="13.0" layoutY="191.0" style="-fx-text-fill: white;" text="Philhealth:"/>
-                        <Label layoutX="13.0" layoutY="208.0" style="-fx-text-fill: white;" text="Pagibig:"/>
-                        <Label layoutX="13.0" layoutY="225.0" style="-fx-text-fill: white;" text="TIN:"/>
-                        <Label layoutX="176.0" layoutY="36.0" style="-fx-text-fill: white;" text="Status:"/>
-                        <Label layoutX="176.0" layoutY="53.0" style="-fx-text-fill: white;" text="Position:"/>
-                        <Label layoutX="13.0" layoutY="121.0" lineSpacing="1.0" prefHeight="17.0" prefWidth="122.0"
-                               style="-fx-text-fill: white;" text="Immediate Supervisor:"/>
-                        <Label layoutX="13.0" layoutY="257.0" style="-fx-text-fill: white;" text="Rate">
-                            <font>
-                                <Font name="Arial Black" size="14.0"/>
-                            </font>
-                        </Label>
-                        <Label layoutX="13.0" layoutY="279.0" style="-fx-text-fill: white;" text="Basic Salary:"/>
-                        <Label layoutX="13.0" layoutY="297.0" style="-fx-text-fill: white;" text="Rice Subsidy:"/>
-                        <Label layoutX="13.0" layoutY="315.0" style="-fx-text-fill: white;" text="Phone Allowance:"/>
-                        <Label layoutX="13.0" layoutY="333.0" style="-fx-text-fill: white;" text="Clothing Allowance:"/>
-                        <Label layoutX="13.0" layoutY="351.0" style="-fx-text-fill: white;"
-                               text="Gross Semi-Monthly Rate:"/>
-                        <Label layoutX="175.0" layoutY="279.0" style="-fx-text-fill: white;" text="Hourly Rate:"/>
-                        <Label fx:id="firstNameLabelValue" layoutX="80.0" layoutY="36.0" text="Name" textFill="WHITE"/>
-                        <Label fx:id="lastNameLabelValue" layoutX="80.0" layoutY="53.0" text="Label" textFill="WHITE"/>
-                        <Label fx:id="birthdayLabelValue" layoutX="66.0" layoutY="70.0" text="Label" textFill="WHITE"/>
-                        <Label fx:id="addressLabelValue" layoutX="66.0" layoutY="87.0" text="Label" textFill="WHITE"/>
-                        <Label fx:id="phoneNumberLabelValue" layoutX="104.0" layoutY="104.0" text="Label"
-                               textFill="WHITE"/>
-                        <Label fx:id="immediateSupervisorLabelValue" layoutX="137.0" layoutY="121.0" text="Label"
-                               textFill="WHITE"/>
-                        <Label fx:id="statusLabelValue" layoutX="217.0" layoutY="36.0" text="Label" textFill="WHITE"/>
-                        <Label fx:id="positionLabelValue" layoutX="226.0" layoutY="53.0" text="Label" textFill="WHITE"/>
-                        <Label fx:id="sssLabelValue" layoutX="41.0" layoutY="174.0" text="Label" textFill="WHITE"/>
-                        <Label fx:id="philhealthLabelValue" layoutX="74.0" layoutY="192.0" text="Label"
-                               textFill="WHITE"/>
-                        <Label fx:id="pagibigLabelValue" layoutX="60.0" layoutY="208.0" text="Label" textFill="WHITE"/>
-                        <Label fx:id="tinLabelValue" layoutX="41.0" layoutY="225.0" text="Label" textFill="WHITE"/>
-                        <Label fx:id="basicSalaryLabelValue" layoutX="82.0" layoutY="279.0" text="Label"
-                               textFill="WHITE"/>
-                        <Label fx:id="riceSubsidyLabelValue" layoutX="88.0" layoutY="297.0" text="Label"
-                               textFill="WHITE"/>
-                        <Label fx:id="phoneAllowanceLabelValue" layoutX="110.0" layoutY="315.0" text="Label"
-                               textFill="WHITE"/>
-                        <Label fx:id="clothingAllowanceLabelValue" layoutX="121.0" layoutY="333.0" text="Label"
-                               textFill="WHITE"/>
-                        <Label fx:id="grossSemiMonthlyRateLabelValue" layoutX="161.0" layoutY="351.0" text="Label"
-                               textFill="WHITE"/>
-                        <Label fx:id="hourlyRateLabelValue" layoutX="245.0" layoutY="279.0" text="Label"
-                               textFill="WHITE"/>
+                        <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="10.0" GridPane.hgrow="ALWAYS"
+                                  GridPane.vgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <Label style="-fx-text-fill: white;" text="Profile">
+                                    <font>
+                                        <Font name="Arial Black" size="14.0"/>
+                                    </font>
+                                </Label>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="1">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="First Name:"/>
+                                        <TextField fx:id="firstNameTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="2">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="Last Name:"/>
+                                        <TextField fx:id="lastNameTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="3">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="Birthday:"/>
+                                        <TextField fx:id="birthdayTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="4">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="Address:"/>
+                                        <TextField fx:id="addressTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="5">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="Phone Number:"/>
+                                        <TextField fx:id="phoneNumberTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false" prefHeight="25.0" prefWidth="149.0"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="6">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="Status:"/>
+                                        <TextField fx:id="statusTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="7">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="Position:"/>
+                                        <TextField fx:id="positionTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="8">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="124.0" style="-fx-text-fill: white;"
+                                               text="Immediate Supervisor:"/>
+                                        <TextField fx:id="immediateSupervisorTextFieldValue" disable="true"
+                                                   editable="false" focusTraversable="false" prefHeight="25.0"
+                                                   prefWidth="132.0"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </GridPane>
+                        <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="10.0" GridPane.hgrow="ALWAYS"
+                                  GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <Label style="-fx-text-fill: white;" text="Government Accounts">
+                                    <font>
+                                        <Font name="Arial Black" size="14.0"/>
+                                    </font>
+                                </Label>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="1">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="SSS:"/>
+                                        <TextField fx:id="sssTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="2">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="Pagibig:"/>
+                                        <TextField fx:id="pagibigTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="3">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="Philhealth:"/>
+                                        <TextField fx:id="philhealthTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0" GridPane.rowIndex="4">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="107.0" style="-fx-text-fill: white;"
+                                               text="TIN:"/>
+                                        <TextField fx:id="tinTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </GridPane>
+                        <VBox spacing="20.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                            <children>
+                                <Label style="-fx-text-fill: white;" text="Rate">
+                                    <font>
+                                        <Font name="Arial Black" size="14.0"/>
+                                    </font>
+                                </Label>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="77.0" style="-fx-text-fill: white;"
+                                               text="Basic Salary:"/>
+                                        <TextField fx:id="basicSalaryTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false" prefHeight="25.0" prefWidth="139.0"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="81.0" style="-fx-text-fill: white;"
+                                               text="Rice Subsidy:"/>
+                                        <TextField fx:id="riceSubsidyTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="113.0" style="-fx-text-fill: white;"
+                                               text="Phone Allowance:"/>
+                                        <TextField fx:id="phoneAllowanceTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="130.0" style="-fx-text-fill: white;"
+                                               text="Clothing Allowance:"/>
+                                        <TextField fx:id="clothingAllowanceTextFieldValue" disable="true"
+                                                   editable="false" focusTraversable="false" prefHeight="25.0"
+                                                   prefWidth="139.0"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" focusTraversable="true" prefHeight="24.0"
+                                      prefWidth="188.0">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="172.0" style="-fx-text-fill: white;"
+                                               text="Gross Semi-monthly rate:" HBox.hgrow="NEVER"/>
+                                        <TextField fx:id="grossSemiMonthlyRateTextFieldValue" disable="true"
+                                                   editable="false" focusTraversable="false" prefHeight="25.0"
+                                                   prefWidth="135.0" HBox.hgrow="NEVER"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="188.0">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="71.0" style="-fx-text-fill: white;"
+                                               text="Hourly Rate:"/>
+                                        <TextField fx:id="hourlyRateTextFieldValue" disable="true" editable="false"
+                                                   focusTraversable="false"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
                     </children>
-                </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="620.0">
+                    <columnConstraints>
+                        <ColumnConstraints/>
+                        <ColumnConstraints/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0"/>
+                        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0"/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                    </rowConstraints>
+                    <padding>
+                        <Insets bottom="30.0" left="10.0" right="10.0" top="20.0"/>
+                    </padding>
+                </GridPane>
+
+                <VBox alignment="CENTER" minHeight="400.0" minWidth="310.0" spacing="5.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <TableView fx:id="attendanceTableView" layoutX="13.0" layoutY="44.0" prefHeight="200.0"
-                                   prefWidth="275.0">
-                            <columns>
-                                <TableColumn fx:id="attendanceTableDateColumn" editable="false" prefWidth="106.0"
-                                             resizable="false" sortable="false" text="Date"/>
-                                <TableColumn fx:id="attendanceTableTimeInColumn" editable="false" prefWidth="85.0"
-                                             resizable="false" sortable="false" text="Time in"/>
-                                <TableColumn fx:id="attendanceTableTimeOutColumn" editable="false" prefWidth="85.0"
-                                             resizable="false" sortable="false" text="Time out"/>
-                            </columns>
-                        </TableView>
                         <Label layoutX="13.0" layoutY="14.0" text="Attendance">
                             <font>
                                 <Font name="Arial Black" size="14.0"/>
                             </font>
                         </Label>
-                        <Label layoutX="13.0" layoutY="256.0" text="Start:"/>
-                        <DatePicker fx:id="attendanceTableStartDatePicker" layoutX="52.0" layoutY="290.0"
-                                    prefHeight="25.0" prefWidth="105.0" promptText="Pick a date"/>
-                        <Label layoutX="13.0" layoutY="294.0" text="End:"/>
-                        <DatePicker fx:id="attendanceTableEndDatePicker" layoutX="52.0" layoutY="252.0"
-                                    prefHeight="25.0" prefWidth="105.0" promptText="Pick a date"/>
-                        <Label layoutX="13.0" layoutY="326.0" text="Computed Salary Based on Start and End date:"
-                               wrapText="true">
-                            <font>
-                                <Font name="System Bold" size="12.0"/>
-                            </font>
-                        </Label>
-                        <TextField fx:id="attendanceTableComputedSalaryBasedOnDatePick" editable="false" layoutX="13.0"
-                                   layoutY="351.0" promptText="0.00"/>
+                        <TableView fx:id="attendanceTableView" focusTraversable="false" layoutX="13.0" layoutY="44.0"
+                                   minHeight="275.0" minWidth="300.0" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="attendanceTableDateColumn" editable="false" minWidth="106.0"
+                                             prefWidth="-1.0" resizable="false" sortable="false" text="Date"/>
+                                <TableColumn fx:id="attendanceTableTimeInColumn" editable="false" minWidth="85.0"
+                                             prefWidth="-1.0" resizable="false" sortable="false" text="Time in"/>
+                                <TableColumn fx:id="attendanceTableTimeOutColumn" editable="false" minWidth="85.0"
+                                             prefWidth="-1.0" resizable="false" sortable="false" text="Time out"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+                        <HBox prefHeight="25.0" prefWidth="300.0" spacing="30.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="139.0" spacing="5.0">
+                                    <children>
+                                        <Label text="Start:"/>
+                                        <DatePicker fx:id="attendanceTableStartDatePicker" prefHeight="25.0"
+                                                    prefWidth="105.0" promptText="Pick a date"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="134.0" spacing="5.0">
+                                    <children>
+                                        <Label text="End:"/>
+                                        <DatePicker fx:id="attendanceTableEndDatePicker" prefHeight="25.0"
+                                                    prefWidth="105.0" promptText="Pick a date"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                        <VBox alignment="CENTER_LEFT" spacing="5.0">
+                            <children>
+                                <Label text="Computed Salary Based on Start and End date:" wrapText="true">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Label>
+                                <TextField fx:id="attendanceTableComputedSalaryBasedOnDatePick" disable="true"
+                                           editable="false" focusTraversable="false" promptText="0.00"/>
+                            </children>
+                        </VBox>
                     </children>
-                </AnchorPane>
+                    <padding>
+                        <Insets bottom="30.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+
+                </VBox>
+
             </children>
         </HBox>
     </center>
+
 </BorderPane>
