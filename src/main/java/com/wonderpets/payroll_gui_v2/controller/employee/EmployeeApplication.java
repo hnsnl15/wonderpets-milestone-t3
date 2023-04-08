@@ -17,7 +17,7 @@ public class EmployeeApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(EmployeeApplication.class.getResource("/com/wonderpets/payroll_gui_v2/employee-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1080, 568);
-        stage.setTitle("Employee");
+        stage.setTitle("MotorPH Payroll Management System");
         stage.setScene(scene);
         stage.show();
     }
