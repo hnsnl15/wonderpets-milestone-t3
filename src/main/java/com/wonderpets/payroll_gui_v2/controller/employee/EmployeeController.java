@@ -200,13 +200,6 @@ public class EmployeeController implements Initializable {
 
     }
 
-//    private double onCalculateButtonClick(ActionEvent event) {
-//        double result = 0d;
-//
-//
-//        return result;
-//    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
