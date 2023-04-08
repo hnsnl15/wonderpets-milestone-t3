@@ -20,6 +20,15 @@ public class Attendance {
         this.timeOut = timeOut.strip();
     }
 
+    public Attendance(String timeIn, String timeOut) {
+
+        this.id = (int) ((Math.random() * 9) + (Math.random() * 9) + 10000);
+        this.name = "Anon";
+        this.date = stringToLocalDate("1/1/23");
+        this.timeIn = timeIn.strip();
+        this.timeOut = timeOut.strip();
+    }
+
     public static LocalDate stringToLocalDate(String dateString) {
         LocalDate date = null;
         // Define the patterns used in the date strings
