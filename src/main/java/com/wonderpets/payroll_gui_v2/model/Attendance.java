@@ -1,6 +1,7 @@
 package com.wonderpets.payroll_gui_v2.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Attendance {
@@ -35,6 +36,21 @@ public class Attendance {
             }
         }
         return date;
+    }
+
+    public int getHoursWorkedPerDay() {
+        // Define a DateTimeFormatter for the time pattern
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
+
+        // Parse the input string into LocalTime objects
+        LocalTime localTime1 = LocalTime.parse(timeIn, formatter);
+        LocalTime localTime2 = LocalTime.parse(timeOut, formatter);
+
+        // Extract the hour part from the LocalTime objects
+        int hour1 = localTime1.getHour();
+        int hour2 = localTime2.getHour();
+
+        return hour2 - hour1;
     }
 
     @Override
