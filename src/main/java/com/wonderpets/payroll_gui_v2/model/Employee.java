@@ -44,7 +44,7 @@ public class Employee extends User {
     }
 
     private static LocalDate stringToLocalDate(String dateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy", Locale.ENGLISH);
         return LocalDate.parse(dateString, formatter);
     }
 
