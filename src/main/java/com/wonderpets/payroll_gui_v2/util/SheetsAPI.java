@@ -48,7 +48,7 @@ public class SheetsAPI {
 
     private static List<List<Object>> getDataFromGoogleSheet(String query) throws IOException {
         Sheets sheetsService = SheetsAPI.getSheetsService();
-        String spreadsheetId = "1LaWzN0k-JI1Z9L3UVqIF3K8nthAkourEy7bzfulNQF0";
+        String spreadsheetId = "1JIevo1BJSuU0Iv8c_YKxSXKtdJJwk3LilAT822P3IW8";
         ValueRange response = sheetsService.spreadsheets().values().get(spreadsheetId, query).execute();
         return response.getValues();
     }
