@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class SheetsAPI {
     private static final String APPLICATION_NAME = "MotorPH Google Sheet API";
-    private static final String SERVICE_ACCOUNT_FILE = "/credentials.json";
+    private static final String SERVICE_ACCOUNT_FILE = "/.credentials.json";
     private static final List<Employee> employees = new ArrayList<>();
     private static final List<Attendance> attendances = new ArrayList<>();
 
