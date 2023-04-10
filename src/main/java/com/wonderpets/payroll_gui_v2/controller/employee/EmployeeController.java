@@ -103,7 +103,8 @@ public class EmployeeController implements Initializable {
                     // Creating another loop to find all attendance of the current employee
                     int nestedCounter = 0;
                     List<Attendance> listOfAttendance = SheetsAPI.getAttendanceList();
-                    ObservableList<ProfileController.AttendanceObservableListModel> attendanceObservableListModel = FXCollections.observableArrayList();
+                    ObservableList<ProfileController.AttendanceObservableListModel> attendanceObservableListModel =
+                            FXCollections.observableArrayList();
 
                     while (nestedCounter < SheetsAPI.getAttendanceList().size()) {
                         if (queryId == listOfAttendance.get(nestedCounter).getId()) {
@@ -111,19 +112,25 @@ public class EmployeeController implements Initializable {
                             String timeIn = SheetsAPI.getAttendanceList().get(nestedCounter).getTimeIn();
                             String timeOut = SheetsAPI.getAttendanceList().get(nestedCounter).getTimeOut();
 
-                            ProfileController.AttendanceObservableListModel newList = new ProfileController.AttendanceObservableListModel(date, timeIn, timeOut);
+                            ProfileController.AttendanceObservableListModel newList =
+                                    new ProfileController.AttendanceObservableListModel(date, timeIn, timeOut);
                             attendanceObservableListModel.add(newList);
 
                             // Populate the attendance table in the profile dashboard
-                            TableColumn<ProfileController.AttendanceObservableListModel, String> dateColumn = controller.getAttendanceTableDateColumn();
+                            TableColumn<ProfileController.AttendanceObservableListModel, String> dateColumn =
+                                    controller.getAttendanceTableDateColumn();
                             dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
                             dateColumn.setStyle("-fx-alignment: center;");
                             controller.setAttendanceTableDateColumn(dateColumn);
-                            TableColumn<ProfileController.AttendanceObservableListModel, String> timeInColumn = controller.getAttendanceTableTimeInColumn();
+
+                            TableColumn<ProfileController.AttendanceObservableListModel, String> timeInColumn =
+                                    controller.getAttendanceTableTimeInColumn();
                             timeInColumn.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
                             timeInColumn.setStyle("-fx-alignment: center;");
                             controller.setAttendanceTableTimeInColumn(timeInColumn);
-                            TableColumn<ProfileController.AttendanceObservableListModel, String> timeOutColumn = controller.getAttendanceTableTimeOutColumn();
+
+                            TableColumn<ProfileController.AttendanceObservableListModel, String> timeOutColumn =
+                                    controller.getAttendanceTableTimeOutColumn();
                             timeOutColumn.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
                             timeOutColumn.setStyle("-fx-alignment: center;");
                             controller.setAttendanceTableTimeOutColumn(timeOutColumn);
@@ -132,10 +139,12 @@ public class EmployeeController implements Initializable {
                         nestedCounter++;
                     }
 
-                    // Bind calculate button
+                    // Initialize the calculate button for binding necessary events to calculate value based on
+                    // selected dates
                     Button calculateButton = controller.getCalculateProfileDashboardButton();
-
-                    TableView<ProfileController.AttendanceObservableListModel> attendanceTableView = controller.getAttendanceTableView();
+                    // Initialize the table view with its initial values for attendance
+                    TableView<ProfileController.AttendanceObservableListModel> attendanceTableView =
+                            controller.getAttendanceTableView();
                     attendanceTableView.setItems(attendanceObservableListModel);
                     // Date picker event
                     startDate.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -145,14 +154,16 @@ public class EmployeeController implements Initializable {
                         }
                     });
                     endDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-                        // Check if end date is after start date
+                        // Check if end date is after start date and disable the button to calculate
                         if (newValue != null && startDate.getValue() != null) {
                             calculateButton.setDisable(newValue.isBefore(startDate.getValue()));
                         }
                     });
                     // Filter selected date and update the table
-                    FilteredList<ProfileController.AttendanceObservableListModel> attendanceObservableListModelFilteredList = new FilteredList<>(attendanceObservableListModel, b -> true);
-
+                    FilteredList<ProfileController.AttendanceObservableListModel> attendanceObservableListModelFilteredList =
+                            new FilteredList<>(attendanceObservableListModel, b -> true);
+                    // Validate start date field if it is greater than the end date
+                    // This will update if the event returns true
                     startDate.valueProperty().addListener((observable, oldValue, newValue) -> {
                         attendanceObservableListModelFilteredList.setPredicate(attendance -> {
                             LocalDate start = startDate.getValue();
@@ -162,7 +173,8 @@ public class EmployeeController implements Initializable {
                                     (end == null || d.isBefore(end) || d.isEqual(end));
                         });
                     });
-
+                    // Validate end date field if it is less than the starting date
+                    // This will update if the event returns true
                     endDate.valueProperty().addListener((observable, oldValue, newValue) -> {
                         attendanceObservableListModelFilteredList.setPredicate(attendance -> {
                             LocalDate start = startDate.getValue();
@@ -173,9 +185,9 @@ public class EmployeeController implements Initializable {
                         });
                     });
 
-                    // Set filtered list to table view
+                    // Set the new value of the table view based on the selected dates from starting date to end date
                     attendanceTableView.setItems(attendanceObservableListModelFilteredList);
-
+                    // If the calculate button is clicked, this event will trigger
                     calculateButton.setOnAction(ev -> {
                         // Calculate date difference in days
                         Duration duration = Duration.between(startDate.getValue().atStartOfDay(),
@@ -202,7 +214,7 @@ public class EmployeeController implements Initializable {
 //                                + calculatePhilhealthContribution(BigDecimal.valueOf(salary))
 //                                + calculatePagibigContribution(BigDecimal.valueOf(salary));
 
-                        controller.setAttendanceTableComputedSalaryBasedOnDatePick(String.valueOf(moneyFormat.format(s.subtract(BigDecimal.valueOf(tax)))));
+                        controller.setAttendanceTableComputedSalaryBasedOnDatePick(moneyFormat.format(s.subtract(BigDecimal.valueOf(tax))));
 
                     });
 
