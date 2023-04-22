@@ -221,6 +221,12 @@
                                 </Button>
                             </children>
                         </AnchorPane>
+                        <Button fx:id="profileDashboardUpdateButton" mnemonicParsing="false" text="Update"
+                                GridPane.rowIndex="7">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Button>
                     </children>
                     <columnConstraints>
                         <ColumnConstraints/>
