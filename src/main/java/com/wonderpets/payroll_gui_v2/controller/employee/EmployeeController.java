@@ -32,11 +32,10 @@ import java.util.ResourceBundle;
 import static com.wonderpets.payroll_gui_v2.model.Employee.*;
 
 public class EmployeeController implements Initializable {
+
     @FXML
     protected TextField employeeTableSearchField;
     ObservableList<EmployeeObservableListModel> employeeObservableList = FXCollections.observableArrayList();
-    @FXML
-    private Button employeeTableUpdateButton;
     @FXML
     private Button employeeTableDeleteButton;
     @FXML
@@ -48,7 +47,6 @@ public class EmployeeController implements Initializable {
     private TableView<EmployeeObservableListModel> employeeTableView;
     @FXML
     private TableColumn<EmployeeObservableListModel, Integer> employeeIdTableColumn;
-
     @FXML
     private TableColumn<EmployeeObservableListModel, String> employeeFirstNameTableColumn;
     @FXML
@@ -60,7 +58,8 @@ public class EmployeeController implements Initializable {
 
     private void onViewButtonClick(ActionEvent event) {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/wonderpets/payroll_gui_v2/profile-view.fxml"));
+        FXMLLoader profileViewLoader = new FXMLLoader(getClass()
+                .getResource("/com/wonderpets/payroll_gui_v2/profile-view.fxml"));
         Parent root;
 
         if (scene != null && scene.getWindow() != null) {
@@ -75,8 +74,8 @@ public class EmployeeController implements Initializable {
         }
 
         try {
-            root = fxmlLoader.load();
-            ProfileController controller = fxmlLoader.getController();
+            root = profileViewLoader.load();
+            ProfileController controller = profileViewLoader.getController();
 
             int counter = 0;
             while (counter < SheetsAPI.getEmployeeList().size()) {
