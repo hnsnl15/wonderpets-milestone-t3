@@ -37,6 +37,10 @@ public class EmployeeController implements Initializable {
     protected TextField employeeTableSearchField;
     ObservableList<EmployeeObservableListModel> employeeObservableList = FXCollections.observableArrayList();
     @FXML
+    private Button employeeTableDeleteButton;
+    @FXML
+    private Button employeeTableAddButton;
+    @FXML
     private Button employeeTableViewButton;
     private Scene scene;
     @FXML
@@ -139,7 +143,7 @@ public class EmployeeController implements Initializable {
                         }
                         nestedCounter++;
                     }
-                    
+
 
                     // Initialize the calculate button for binding necessary events to calculate value based on
                     Button calculateButton = controller.getCalculateProfileDashboardButton();
