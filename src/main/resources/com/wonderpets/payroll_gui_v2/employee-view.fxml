@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0"
             minWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             fx:controller="com.wonderpets.payroll_gui_v2.controller.employee.EmployeeController">
@@ -65,13 +65,6 @@
                 </Button>
                 <Button fx:id="employeeTableAddButton" alignment="CENTER" disable="true" layoutX="880.0" layoutY="20.0"
                         mnemonicParsing="false" style="-fx-background-color: #0B2447;" text="Add" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold" size="14.0"/>
-                    </font>
-                </Button>
-                <Button fx:id="employeeTableUpdateButton" alignment="CENTER" disable="true" layoutX="797.0"
-                        layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: #0B2447;" text="Update"
-                        textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>
