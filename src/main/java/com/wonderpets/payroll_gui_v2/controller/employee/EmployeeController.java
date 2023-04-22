@@ -32,10 +32,11 @@ import java.util.ResourceBundle;
 import static com.wonderpets.payroll_gui_v2.model.Employee.*;
 
 public class EmployeeController implements Initializable {
-
     @FXML
     protected TextField employeeTableSearchField;
     ObservableList<EmployeeObservableListModel> employeeObservableList = FXCollections.observableArrayList();
+    @FXML
+    private Button employeeTableUpdateButton;
     @FXML
     private Button employeeTableDeleteButton;
     @FXML
