@@ -47,14 +47,30 @@
         </TableView>
     </center>
     <bottom>
-        <Button fx:id="employeeTableViewButton" alignment="CENTER" disable="true" mnemonicParsing="false"
-                style="-fx-background-color: #0B2447;" text="View" textFill="WHITE" BorderPane.alignment="CENTER">
-            <font>
-                <Font name="System Bold" size="14.0"/>
-            </font>
-            <BorderPane.margin>
-                <Insets bottom="10.0" top="10.0"/>
-            </BorderPane.margin>
-        </Button>
+        <Pane prefHeight="67.0" prefWidth="1082.0">
+            <children>
+                <Button fx:id="employeeTableViewButton" alignment="CENTER" disable="true" layoutX="1017.0"
+                        layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: #0B2447;" text="View"
+                        textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="employeeTableDeleteButton" alignment="CENTER" disable="true" layoutX="941.0"
+                        layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: #0B2447;" text="Delete"
+                        textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="employeeTableAddButton" alignment="CENTER" disable="true" layoutX="880.0" layoutY="20.0"
+                        mnemonicParsing="false" style="-fx-background-color: #0B2447;" text="Add" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+
+            </children>
+        </Pane>
     </bottom>
 </BorderPane>
