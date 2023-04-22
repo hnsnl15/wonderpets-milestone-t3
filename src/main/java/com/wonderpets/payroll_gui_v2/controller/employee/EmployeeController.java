@@ -4,6 +4,7 @@ import com.wonderpets.payroll_gui_v2.controller.profile.ProfileController;
 import com.wonderpets.payroll_gui_v2.model.Attendance;
 import com.wonderpets.payroll_gui_v2.model.Employee;
 import com.wonderpets.payroll_gui_v2.util.SheetsAPI;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -138,55 +139,40 @@ public class EmployeeController implements Initializable {
                         }
                         nestedCounter++;
                     }
+                    
 
                     // Initialize the calculate button for binding necessary events to calculate value based on
-                    // selected dates
                     Button calculateButton = controller.getCalculateProfileDashboardButton();
+
                     // Initialize the table view with its initial values for attendance
-                    TableView<ProfileController.AttendanceObservableListModel> attendanceTableView =
-                            controller.getAttendanceTableView();
+                    TableView<ProfileController.AttendanceObservableListModel> attendanceTableView = controller.getAttendanceTableView();
                     attendanceTableView.setItems(attendanceObservableListModel);
-                    // Date picker event
-                    startDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-                        // Check if end date is after start date
-                        if (newValue != null && endDate.getValue() != null) {
-                            calculateButton.setDisable(endDate.getValue().isBefore(newValue));
-                        }
-                    });
-                    endDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-                        // Check if end date is after start date and disable the button to calculate
-                        if (newValue != null && startDate.getValue() != null) {
-                            calculateButton.setDisable(newValue.isBefore(startDate.getValue()));
-                        }
-                    });
-                    // Filter selected date and update the table
+
                     FilteredList<ProfileController.AttendanceObservableListModel> attendanceObservableListModelFilteredList =
                             new FilteredList<>(attendanceObservableListModel, b -> true);
-                    // Validate start date field if it is greater than the end date
-                    // This will update if the event returns true
-                    startDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-                        attendanceObservableListModelFilteredList.setPredicate(attendance -> {
-                            LocalDate start = startDate.getValue();
-                            LocalDate end = endDate.getValue();
-                            LocalDate d = LocalDate.parse(attendance.getDate());
-                            return (start == null || d.isAfter(start) || d.isEqual(start)) &&
-                                    (end == null || d.isBefore(end) || d.isEqual(end));
-                        });
-                    });
-                    // Validate end date field if it is less than the starting date
-                    // This will update if the event returns true
-                    endDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-                        attendanceObservableListModelFilteredList.setPredicate(attendance -> {
-                            LocalDate start = startDate.getValue();
-                            LocalDate end = endDate.getValue();
-                            LocalDate d = LocalDate.parse(attendance.getDate());
-                            return (start == null || d.isAfter(start) || d.isEqual(start)) &&
-                                    (end == null || d.isBefore(end) || d.isEqual(end));
-                        });
-                    });
 
-                    // Set the new value of the table view based on the selected dates from starting date to end date
+                    // Validate start and end date fields when their values change
+                    ChangeListener<LocalDate> dateRangeListener = (observable, oldValue, newValue) -> {
+                        LocalDate startDateValue = startDate.getValue();
+                        LocalDate endDateValue = endDate.getValue();
+
+                        // Check if end date is after start date and disable the button to calculate
+                        calculateButton.setDisable(endDateValue != null && startDateValue != null && endDateValue.isBefore(startDateValue));
+
+                        // Filter selected date and update the table
+                        attendanceObservableListModelFilteredList.setPredicate(attendance -> {
+                            LocalDate date = LocalDate.parse(attendance.getDate());
+                            return (startDateValue == null || date.isAfter(startDateValue) || date.isEqual(startDateValue))
+                                    && (endDateValue == null || date.isBefore(endDateValue) || date.isEqual(endDateValue));
+                        });
+                    };
+                    startDate.valueProperty().addListener(dateRangeListener);
+                    endDate.valueProperty().addListener(dateRangeListener);
+
+                    // Filter selected date and update the table
                     attendanceTableView.setItems(attendanceObservableListModelFilteredList);
+
+
                     // If the calculate button is clicked, this event will trigger
                     calculateButton.setOnAction(ev -> {
                         // Calculate date difference in days
