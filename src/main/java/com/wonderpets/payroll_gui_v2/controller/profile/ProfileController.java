@@ -7,6 +7,8 @@ import javafx.scene.layout.AnchorPane;
 public class ProfileController {
 
     @FXML
+    private Button profileDashboardUpdateButton;
+    @FXML
     private Button calculateProfileDashboardButton;
     @FXML
     private Button profileDashboardCloseButton;
