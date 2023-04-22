@@ -46,10 +46,10 @@ public class SheetsAPI {
         main();
     }
 
-    private static List<List<Object>> getDataFromGoogleSheet(String query) throws IOException {
+    private static List<List<Object>> getDataFromGoogleSheet(String range) throws IOException {
         Sheets sheetsService = SheetsAPI.getSheetsService();
         String spreadsheetId = "1JIevo1BJSuU0Iv8c_YKxSXKtdJJwk3LilAT822P3IW8";
-        ValueRange response = sheetsService.spreadsheets().values().get(spreadsheetId, query).execute();
+        ValueRange response = sheetsService.spreadsheets().values().get(spreadsheetId, range).execute();
         return response.getValues();
     }
 
