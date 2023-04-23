@@ -62,10 +62,8 @@ public class ProfileController {
     private TextField firstNameTextFieldValue;
     @FXML
     private TextField lastNameTextFieldValue;
-
     public ProfileController() {
     }
-
     public ProfileController(TextField birthdayTextFieldValue, TextField addressTextFieldValue, TextField phoneNumberTextFieldValue, TextField statusTextFieldValue, TextField positionTextFieldValue, TextField immediateSupervisorTextFieldValue, TextField sssTextFieldValue, TextField pagibigTextFieldValue, TextField philhealthTextFieldValue, TextField tinTextFieldValue, TextField basicSalaryTextFieldValue, TextField riceSubsidyTextFieldValue, TextField phoneAllowanceTextFieldValue, TextField clothingAllowanceTextFieldValue, TextField grossSemiMonthlyRateTextFieldValue, TextField hourlyRateTextFieldValue, TableView<AttendanceObservableListModel> attendanceTableView, TableColumn<AttendanceObservableListModel, String> attendanceTableDateColumn, TableColumn<AttendanceObservableListModel, String> attendanceTableTimeInColumn, TableColumn<AttendanceObservableListModel, String> attendanceTableTimeOutColumn, DatePicker attendanceTableStartDatePicker, DatePicker attendanceTableEndDatePicker, TextField attendanceTableComputedSalaryBasedOnDatePick, TextField firstNameTextFieldValue, TextField lastNameTextFieldValue, AnchorPane profileApplicationViewMainContainer) {
         this.birthdayTextFieldValue = birthdayTextFieldValue;
         this.addressTextFieldValue = addressTextFieldValue;
@@ -92,6 +90,15 @@ public class ProfileController {
         this.attendanceTableComputedSalaryBasedOnDatePick = attendanceTableComputedSalaryBasedOnDatePick;
         this.firstNameTextFieldValue = firstNameTextFieldValue;
         this.lastNameTextFieldValue = lastNameTextFieldValue;
+
+    }
+
+    public Button getProfileDashboardUpdateButton() {
+        return profileDashboardUpdateButton;
+    }
+
+    public void setProfileDashboardUpdateButton(Button profileDashboardUpdateButton) {
+        this.profileDashboardUpdateButton = profileDashboardUpdateButton;
     }
 
     public TextField getBirthdayTextFieldValue() {
