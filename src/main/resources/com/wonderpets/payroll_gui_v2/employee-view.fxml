@@ -21,6 +21,8 @@
                 </Label>
                 <TextField fx:id="employeeTableSearchField" layoutX="135.0" layoutY="28.0" prefHeight="25.0"
                            prefWidth="200.0" promptText="Enter name or id"/>
+                <Button fx:id="employeeTableRefreshButton" layoutX="1021.0" layoutY="25.0" mnemonicParsing="false"
+                        text="Refresh"/>
             </children>
         </AnchorPane>
     </top>
