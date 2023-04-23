@@ -25,17 +25,18 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.wonderpets.payroll_gui_v2.model.Employee.*;
 
 public class EmployeeController implements Initializable {
 
+    private final SheetsAPI sheetsAPI = new SheetsAPI();
     @FXML
     protected TextField employeeTableSearchField;
     ObservableList<EmployeeObservableListModel> employeeObservableList = FXCollections.observableArrayList();
+    @FXML
+    private Button employeeTableRefreshButton;
     @FXML
     private Button employeeTableDeleteButton;
     @FXML
@@ -56,6 +57,92 @@ public class EmployeeController implements Initializable {
     @FXML
     private TableColumn<EmployeeObservableListModel, String> employeeAddressTableColumn;
 
+    private void setTable() {
+        // Creating and loop to populate a table
+        int counter = 0;
+        while (counter < sheetsAPI.getEmployeeList().size()) {
+            int employeeId = sheetsAPI.getEmployeeList().get(counter).getId();
+            String firstName = sheetsAPI.getEmployeeList().get(counter).getFirstName();
+            String lastName = sheetsAPI.getEmployeeList().get(counter).getLastName();
+            String phoneNumber = sheetsAPI.getEmployeeList().get(counter).getPhoneNumber();
+            String address = sheetsAPI.getEmployeeList().get(counter).getAddress();
+
+            // Creating new table cell with employee data
+            EmployeeObservableListModel newList = new EmployeeObservableListModel(
+                    employeeId,
+                    firstName,
+                    lastName,
+                    phoneNumber,
+                    address
+            );
+            employeeObservableList.add(newList);
+            counter++;
+        }
+        // Setting up the initial value of the table
+        employeeIdTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
+        employeeIdTableColumn.setStyle("-fx-alignment: center;");
+        employeeFirstNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        employeeFirstNameTableColumn.setStyle("-fx-alignment: center;");
+        employeeLastNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        employeeLastNameTableColumn.setStyle("-fx-alignment: center;");
+        employeePhoneNumberTableColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        employeePhoneNumberTableColumn.setStyle("-fx-alignment: center;");
+        employeeAddressTableColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        employeeAddressTableColumn.setStyle("-fx-alignment: center;");
+
+        employeeTableView.setItems(employeeObservableList);
+        // Binding button to a table selection handler
+        employeeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            employeeTableViewButton.setOnAction(this::onViewButtonClick);
+            employeeTableViewButton.setDisable(newValue == null);
+        });
+        employeeTableRefreshButton.setOnAction(e -> {
+            try {
+                refreshUI();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+    }
+
+    private void searchTable(FilteredList<EmployeeObservableListModel> employeeObservableListModelFilteredList) {
+
+        // Implementing search functionality
+        employeeTableSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+                employeeObservableListModelFilteredList.setPredicate(emp -> {
+
+                    if (newValue.isEmpty() || newValue.isBlank()) return true;
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if ((String.valueOf(emp.getEmployeeId())).contains(searchKeyword)) {
+                        return true;
+                    } else if (emp.getFirstName().toLowerCase().contains(searchKeyword)) {
+                        return true;
+                    } else return emp.getLastName().toLowerCase().contains(searchKeyword);
+                }));
+
+    }
+
+    private void sortTable(FilteredList<EmployeeObservableListModel> employeeObservableListModelFilteredList) {
+
+        // Setting new values in the table after filtering from the search results
+        SortedList<EmployeeObservableListModel> employeeObservableListModelSortedList = new SortedList<>(employeeObservableListModelFilteredList);
+        employeeObservableListModelSortedList.comparatorProperty().bind(employeeTableView.comparatorProperty());
+        employeeTableView.setItems(employeeObservableListModelSortedList);
+
+    }
+
+    private void loadTable() {
+
+        setTable();
+        FilteredList<EmployeeObservableListModel> employeeObservableListModelFilteredList =
+                new FilteredList<>(employeeObservableList, b -> true);
+        searchTable(employeeObservableListModelFilteredList);
+        sortTable(employeeObservableListModelFilteredList);
+
+    }
+
     private void onViewButtonClick(ActionEvent event) {
 
         FXMLLoader profileViewLoader = new FXMLLoader(getClass()
@@ -68,18 +155,13 @@ public class EmployeeController implements Initializable {
         }
 
         try {
-            SheetsAPI.run();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
             root = profileViewLoader.load();
             ProfileController controller = profileViewLoader.getController();
+            Map<String, String> updateButtonChangedValues = new HashMap<>();
 
             int counter = 0;
-            while (counter < SheetsAPI.getEmployeeList().size()) {
-                List<Employee> listOfEmployee = SheetsAPI.getEmployeeList();
+            while (counter < sheetsAPI.getEmployeeList().size()) {
+                List<Employee> listOfEmployee = sheetsAPI.getEmployeeList();
                 int queryId = employeeTableView.getSelectionModel().getSelectedItem().getEmployeeId();
 
                 if (queryId == listOfEmployee.get(counter).getId()) {
@@ -102,20 +184,58 @@ public class EmployeeController implements Initializable {
                     controller.setPagibigTextFieldValue(listOfEmployee.get(counter).getGovernmentAccounts().tin());
                     controller.setClothingAllowanceTextFieldValue(String.valueOf(listOfEmployee.get(counter).getBenefit().getClothingAllowance()));
 
+                    // Update button
+                    Button updateButton = controller.getProfileDashboardUpdateButton();
+                    ObservableList<TextField> textFieldList = FXCollections.observableArrayList();
+                    textFieldList.addAll(
+                            controller.getFirstNameTextFieldValue(),
+                            controller.getLastNameTextFieldValue(),
+                            controller.getAddressTextFieldValue(),
+                            controller.getBirthdayTextFieldValue(),
+                            controller.getPhoneNumberTextFieldValue(),
+                            controller.getStatusTextFieldValue(),
+                            controller.getBasicSalaryTextFieldValue(),
+                            controller.getGrossSemiMonthlyRateTextFieldValue(),
+                            controller.getSssTextFieldValue(),
+                            controller.getRiceSubsidyTextFieldValue(),
+                            controller.getPhoneAllowanceTextFieldValue(),
+                            controller.getHourlyRateTextFieldValue(),
+                            controller.getPositionTextFieldValue(),
+                            controller.getImmediateSupervisorTextFieldValue(),
+                            controller.getPhilhealthTextFieldValue(),
+                            controller.getTinTextFieldValue(),
+                            controller.getPagibigTextFieldValue(),
+                            controller.getClothingAllowanceTextFieldValue()
+                    );
+                    for (TextField textField : textFieldList) {
+                        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                            updateButton.setDisable(false);
+                            updateButtonChangedValues.put(textField.getId(), newValue);
+                            updateButton.setOnAction(e -> {
+                                try {
+                                    onUpdateButtonClick(e, queryId, updateButtonChangedValues);
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            });
+                        });
+                    }
+                    controller.setProfileDashboardUpdateButton(updateButton);
+
                     DatePicker startDate = controller.getAttendanceTableStartDatePicker();
                     DatePicker endDate = controller.getAttendanceTableEndDatePicker();
 
                     // Creating another loop to find all attendance of the current employee
                     int nestedCounter = 0;
-                    List<Attendance> listOfAttendance = SheetsAPI.getAttendanceList();
+                    List<Attendance> listOfAttendance = sheetsAPI.getAttendanceList();
                     ObservableList<ProfileController.AttendanceObservableListModel> attendanceObservableListModel =
                             FXCollections.observableArrayList();
 
-                    while (nestedCounter < SheetsAPI.getAttendanceList().size()) {
+                    while (nestedCounter < sheetsAPI.getAttendanceList().size()) {
                         if (queryId == listOfAttendance.get(nestedCounter).getId()) {
-                            String date = SheetsAPI.getAttendanceList().get(nestedCounter).getDate();
-                            String timeIn = SheetsAPI.getAttendanceList().get(nestedCounter).getTimeIn();
-                            String timeOut = SheetsAPI.getAttendanceList().get(nestedCounter).getTimeOut();
+                            String date = sheetsAPI.getAttendanceList().get(nestedCounter).getDate();
+                            String timeIn = sheetsAPI.getAttendanceList().get(nestedCounter).getTimeIn();
+                            String timeOut = sheetsAPI.getAttendanceList().get(nestedCounter).getTimeOut();
 
                             ProfileController.AttendanceObservableListModel newList =
                                     new ProfileController.AttendanceObservableListModel(date, timeIn, timeOut);
@@ -207,9 +327,9 @@ public class EmployeeController implements Initializable {
                         controller.setAttendanceTableComputedSalaryBasedOnDatePick(moneyFormat.format(s.subtract(BigDecimal.valueOf(tax))));
 
                     });
-
+                    // Set the value of controller's calculate button
                     controller.setCalculateProfileDashboardButton(calculateButton);
-
+                    // Set the value of controller's Attendance table
                     controller.setAttendanceTableView(attendanceTableView);
                 }
                 counter++;
@@ -231,75 +351,78 @@ public class EmployeeController implements Initializable {
 
     }
 
+    private void onUpdateButtonClick(ActionEvent event, int id, Map<String, String> updatedValues) throws IOException {
+
+        List<Employee> employees = sheetsAPI.getEmployeeList();
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getId() == id && !updatedValues.isEmpty()) {
+                String cellRange = "Employee Details!A" + (i + 2) + ":S" + (i + 2);
+                List<List<Object>> values = SheetsAPI.getDataFromGoogleSheet(cellRange);
+                List<Object> row = values.get(0);
+
+                for (Map.Entry<String, String> entry : updatedValues.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+
+                    switch (key) {
+                        case "lastNameTextFieldValue" -> row.set(1, value);
+                        case "firstNameTextFieldValue" -> row.set(2, value);
+                        case "addressTextFieldValue" -> row.set(4, value);
+                        case "phoneNumberTextFieldValue" -> row.set(5, value);
+                        case "sssTextFieldValue" -> row.set(6, value);
+                        case "philhealthTextFieldValue" -> row.set(7, value);
+                        case "tinTextFieldValue" -> row.set(8, value);
+                        case "pagibigTextFieldValue" -> row.set(9, value);
+                        case "statusTextFieldValue" -> row.set(10, value);
+                        case "positionTextFieldValue" -> row.set(11, value);
+                        case "immediateSupervisorTextFieldValue" -> row.set(12, value);
+                        case "basicSalaryTextFieldValue" -> row.set(13, value);
+                        case "riceSubsidyTextFieldValue" -> row.set(14, value);
+                        case "phoneAllowanceTextFieldValue" -> row.set(15, value);
+                        case "clothingAllowanceTextFieldValue" -> row.set(16, value);
+                        case "grossSemiMonthlyRateTextFieldValue" -> row.set(17, value);
+                        case "hourlyRateTextFieldValue" -> row.set(18, value);
+                    }
+                }
+
+                List<List<Object>> newValues = new ArrayList<>();
+                newValues.add(row);
+                sheetsAPI.updateValuesInSheet(cellRange, newValues);
+
+                break;
+            }
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        start();
+    }
 
+    private void start() {
         try {
-            SheetsAPI.run();
-            // Creating and loop to populate a table
-            int counter = 0;
-            while (counter < SheetsAPI.getEmployeeList().size()) {
-                int employeeId = SheetsAPI.getEmployeeList().get(counter).getId();
-                String firstName = SheetsAPI.getEmployeeList().get(counter).getFirstName();
-                String lastName = SheetsAPI.getEmployeeList().get(counter).getLastName();
-                String phoneNumber = SheetsAPI.getEmployeeList().get(counter).getPhoneNumber();
-                String address = SheetsAPI.getEmployeeList().get(counter).getAddress();
-
-                // Creating new table cell with employee data
-                EmployeeObservableListModel newList = new EmployeeObservableListModel(
-                        employeeId,
-                        firstName,
-                        lastName,
-                        phoneNumber,
-                        address
-                );
-                employeeObservableList.add(newList);
-                counter++;
-            }
-            // Setting up the initial value of the table
-            employeeIdTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
-            employeeIdTableColumn.setStyle("-fx-alignment: center;");
-            employeeFirstNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-            employeeFirstNameTableColumn.setStyle("-fx-alignment: center;");
-            employeeLastNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-            employeeLastNameTableColumn.setStyle("-fx-alignment: center;");
-            employeePhoneNumberTableColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-            employeePhoneNumberTableColumn.setStyle("-fx-alignment: center;");
-            employeeAddressTableColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-            employeeAddressTableColumn.setStyle("-fx-alignment: center;");
-
-            employeeTableView.setItems(employeeObservableList);
-            // Binding button to a handler
-            employeeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                employeeTableViewButton.setOnAction(this::onViewButtonClick);
-                employeeTableViewButton.setDisable(newValue == null);
-            });
-
-            // Implementing search functionality
-            FilteredList<EmployeeObservableListModel> employeeObservableListModelFilteredList = new FilteredList<>(employeeObservableList, b -> true);
-            employeeTableSearchField.textProperty().addListener((observable, oldValue, newValue) ->
-                    employeeObservableListModelFilteredList.setPredicate(emp -> {
-
-                        if (newValue.isEmpty() || newValue.isBlank()) return true;
-
-                        String searchKeyword = newValue.toLowerCase();
-
-                        if ((String.valueOf(emp.getEmployeeId())).contains(searchKeyword)) {
-                            return true;
-                        } else if (emp.getFirstName().toLowerCase().contains(searchKeyword)) {
-                            return true;
-                        } else return emp.getLastName().toLowerCase().contains(searchKeyword);
-                    }));
-
-            // Setting new values in the table after filtering from the search results
-            SortedList<EmployeeObservableListModel> employeeObservableListModelSortedList = new SortedList<>(employeeObservableListModelFilteredList);
-            employeeObservableListModelSortedList.comparatorProperty().bind(employeeTableView.comparatorProperty());
-            employeeTableView.setItems(employeeObservableListModelSortedList);
-
+            sheetsAPI.run();
+            loadTable();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void refreshUI() throws IOException {
+        // Get the reference to the Stage object
+        Stage window = (Stage) employeeTableRefreshButton.getScene().getWindow();
+        employeeTableView.setItems(null);
+
+        // Close the window
+        window.close();
+
+        // Create a new instance of the EmployeeApplication class
+        EmployeeApplication employeeApplication = new EmployeeApplication();
+
+        // Call the start() method of the new instance
+        employeeApplication.start(new Stage());
+    }
+
 
     public static class EmployeeObservableListModel {
 
