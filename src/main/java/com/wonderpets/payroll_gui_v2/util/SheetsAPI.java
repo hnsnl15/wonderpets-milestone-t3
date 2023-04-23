@@ -19,41 +19,37 @@ import java.util.List;
 import java.util.Objects;
 
 public class SheetsAPI {
-    private static final String APPLICATION_NAME = "MotorPH Google Sheet API";
-    private static final String SERVICE_ACCOUNT_FILE = "/.credentials.json";
+    private static final String spreadsheetId = "1JIevo1BJSuU0Iv8c_YKxSXKtdJJwk3LilAT822P3IW8";
     private static final List<Employee> employees = new ArrayList<>();
     private static final List<Attendance> attendances = new ArrayList<>();
 
+    public static void main(String... args) throws IOException {
+        
+        SheetsAPI.queryEmployeeAttendance();
+        SheetsAPI.queryListOfEmployees();
+    }
+
     public static Sheets getSheetsService() throws IOException {
         Credential credential = authorize();
+        String APPLICATION_NAME = "MotorPH Google Sheet API";
         return new Sheets.Builder(new NetHttpTransport(), new JacksonFactory(), credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
 
     private static Credential authorize() throws IOException {
+        String SERVICE_ACCOUNT_FILE = "/.credentials.json";
         return GoogleCredential
                 .fromStream(Objects.requireNonNull(SheetsAPI.class.getResourceAsStream(SERVICE_ACCOUNT_FILE)))
-                .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS_READONLY));
+                .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));
     }
 
-    public static void main(String... args) throws IOException {
-        queryEmployeeAttendance();
-        queryListOfEmployees();
+    public static List<List<Object>> getDataFromGoogleSheet(String range) throws IOException {
+        return getSheetsService().spreadsheets().values()
+                .get(spreadsheetId, range).execute().getValues();
     }
 
-    public static void run() throws IOException {
-        main();
-    }
-
-    private static List<List<Object>> getDataFromGoogleSheet(String range) throws IOException {
-        Sheets sheetsService = SheetsAPI.getSheetsService();
-        String spreadsheetId = "1JIevo1BJSuU0Iv8c_YKxSXKtdJJwk3LilAT822P3IW8";
-        ValueRange response = sheetsService.spreadsheets().values().get(spreadsheetId, range).execute();
-        return response.getValues();
-    }
-
-    private static void queryEmployeeAttendance() throws IOException {
+    public static void queryEmployeeAttendance() throws IOException {
         List<List<Object>> attendanceRecord = getDataFromGoogleSheet("Attendance Record!A2:F2176");
 
         for (List<?> row : attendanceRecord) {
@@ -79,7 +75,7 @@ public class SheetsAPI {
         }
     }
 
-    private static void queryListOfEmployees() throws IOException {
+    public static void queryListOfEmployees() throws IOException {
         List<List<Object>> values = getDataFromGoogleSheet("Employee Details!A2:S26");
 
         for (List<?> row : values) {
@@ -145,24 +141,36 @@ public class SheetsAPI {
 
     }
 
-    public static List<Employee> getEmployeeList() {
-        return employees;
+    public void updateValuesInSheet(String cellRange, List<List<Object>> newValues) throws IOException {
+        ValueRange body = new ValueRange().setValues(newValues);
+        getSheetsService().spreadsheets().values()
+                .update(spreadsheetId, cellRange, body)
+                .setValueInputOption("RAW")
+                .execute();
     }
 
-    public static List<Attendance> getAttendanceList() {
+    public void run() throws IOException {
+        main();
+    }
+
+    public List<Attendance> getAttendanceList() {
         return attendances;
     }
 
-    private static void printAttendanceList() {
+    private void printAttendanceList() {
         for (Attendance attendance : attendances) {
             System.out.println(attendance);
         }
     }
 
-    private static void printEmployeeList() {
+    private void printEmployeeList() {
         for (Employee employee : employees) {
             System.out.println(employee);
         }
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employees;
     }
 
 }
