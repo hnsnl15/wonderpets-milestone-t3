@@ -6,7 +6,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.api.services.sheets.v4.model.*;
 import com.wonderpets.payroll_gui_v2.model.Account;
 import com.wonderpets.payroll_gui_v2.model.Attendance;
 import com.wonderpets.payroll_gui_v2.model.Benefit;
@@ -24,7 +24,7 @@ public class SheetsAPI {
     private static final List<Attendance> attendances = new ArrayList<>();
 
     public static void main(String... args) throws IOException {
-        
+
         SheetsAPI.queryEmployeeAttendance();
         SheetsAPI.queryListOfEmployees();
     }
@@ -140,6 +140,51 @@ public class SheetsAPI {
         }
 
     }
+
+    public static int getRowIndex(int employeeId, String range) throws IOException {
+        List<List<Object>> values = getDataFromGoogleSheet(range);
+
+        for (int i = 0; i < values.size(); i++) {
+            List<?> row = values.get(i);
+            String id = (String) row.get(0);
+            if (id.equals(String.valueOf(employeeId))) {
+                // Found the row with the given ID, return its index
+                return i + 1; // Add 1 to account for header row
+            }
+        }
+
+        // Employee ID not found in the sheet, return -1
+        return -1;
+    }
+
+    public void deleteEmployee(int employeeId) throws IOException {
+        String range = "Employee Details!A2:S26";
+        int rowIndex = getRowIndex(employeeId, range);
+        if (rowIndex == -1) {
+            // Employee not found in the sheet, do nothing
+            return;
+        }
+
+        List<Request> requests = new ArrayList<>();
+        DeleteDimensionRequest deleteRequest = new DeleteDimensionRequest();
+        DimensionRange rangeToDelete = new DimensionRange();
+
+        List<Sheet> sheets = SheetsAPI.getSheetsService()
+                .spreadsheets().get(spreadsheetId).execute().getSheets();
+        
+        int sheetId = sheets.get(0).getProperties().getSheetId();
+        rangeToDelete.setSheetId(sheetId); // Use the sheet ID of the first sheet
+        rangeToDelete.setDimension("ROWS");
+        rangeToDelete.setStartIndex(rowIndex);
+        rangeToDelete.setEndIndex(rowIndex + 1);
+        deleteRequest.setRange(rangeToDelete);
+        requests.add(new Request().setDeleteDimension(deleteRequest));
+
+        BatchUpdateSpreadsheetRequest requestBody = new BatchUpdateSpreadsheetRequest().setRequests(requests);
+
+        SheetsAPI.getSheetsService().spreadsheets().batchUpdate(spreadsheetId, requestBody).execute();
+    }
+
 
     public void updateValuesInSheet(String cellRange, List<List<Object>> newValues) throws IOException {
         ValueRange body = new ValueRange().setValues(newValues);
