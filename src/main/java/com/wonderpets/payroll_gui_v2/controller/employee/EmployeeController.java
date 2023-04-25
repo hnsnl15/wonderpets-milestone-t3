@@ -94,7 +94,15 @@ public class EmployeeController implements Initializable {
         // Binding button to a table selection handler
         employeeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             employeeTableViewButton.setOnAction(this::onViewButtonClick);
+            employeeTableDeleteButton.setOnAction(e -> {
+                try {
+                    onDeleteButtonClick(e, newValue.getEmployeeId());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
             employeeTableViewButton.setDisable(newValue == null);
+            employeeTableDeleteButton.setDisable(newValue == null);
         });
         employeeTableRefreshButton.setOnAction(e -> {
             try {
@@ -392,6 +400,10 @@ public class EmployeeController implements Initializable {
                 break;
             }
         }
+    }
+
+    private void onDeleteButtonClick(ActionEvent event, int index) throws IOException {
+        sheetsAPI.deleteEmployee(index);
     }
 
     @Override
